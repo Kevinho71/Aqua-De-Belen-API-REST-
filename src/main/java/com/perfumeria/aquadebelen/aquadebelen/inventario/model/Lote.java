@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.lotes.model;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 import java.time.*;
 import java.util.List;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.productos.model;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package com.perfumeria.aquadebelen.aquadebelen.productos.repository;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.repository;
 
 import org.springframework.stereotype.Repository;
 
-import com.perfumeria.aquadebelen.aquadebelen.productos.model.TipoProducto;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.model.TipoProducto;
 
 import jakarta.persistence.EntityManager;
 

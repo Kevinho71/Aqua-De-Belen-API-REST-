@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.productos.DTO;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.DTO;
 
 import java.time.LocalDateTime;
 

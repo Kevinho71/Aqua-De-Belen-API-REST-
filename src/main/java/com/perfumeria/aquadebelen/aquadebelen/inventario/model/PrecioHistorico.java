@@ -1,5 +1,6 @@
-package com.perfumeria.aquadebelen.aquadebelen.reserva.model;
-import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,26 +11,27 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@Table(name = "precios_historico")
 @Entity
-@Table(name = "detalle_reserva")
-public class DetalleReserva {
+public class PrecioHistorico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "producto_id")
-    private Producto producto;
+    @Column(name = "precio_venta")
+    private double precioVenta;
+
+    @Column(name = "fecha")
+    private LocalDateTime fecha;
 
     @ManyToOne
-    @JoinColumn(name = "reserva_id")
-    private Reserva reserva;
+    @JoinColumn(name="producto_id")
+    private Producto producto;
+
 }

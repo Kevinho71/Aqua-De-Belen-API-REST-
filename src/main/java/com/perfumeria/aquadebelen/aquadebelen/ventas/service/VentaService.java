@@ -7,8 +7,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
-import com.perfumeria.aquadebelen.aquadebelen.productos.model.Producto;
-import com.perfumeria.aquadebelen.aquadebelen.productos.repository.ProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaRequest;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaRequest;

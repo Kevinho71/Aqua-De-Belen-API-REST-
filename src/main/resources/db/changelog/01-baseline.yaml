@@ -1,0 +1,573 @@
+databaseChangeLog:
+- changeSet:
+    id: 1760474776931-1
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: factura_pkey
+            name: numero
+            type: INTEGER
+        - column:
+            name: fecha_de_emision
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: nit
+            type: VARCHAR(255)
+        - column:
+            name: razon_social
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: venta_id
+            type: INTEGER
+        tableName: factura
+- changeSet:
+    id: 1760474776931-2
+    author: Usuario (generated)
+    changes:
+    - addUniqueConstraint:
+        columnNames: venta_id
+        constraintName: ukdqdpyg3neeur0ima5mnwti398
+        tableName: factura
+- changeSet:
+    id: 1760474776931-3
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: cliente_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: apellido
+            type: VARCHAR(255)
+        - column:
+            name: direccion
+            type: VARCHAR(255)
+        - column:
+            name: nit_ci
+            type: VARCHAR(255)
+        - column:
+            name: nombre
+            type: VARCHAR(255)
+        - column:
+            name: telefono
+            type: VARCHAR(255)
+        - column:
+            name: nivel_fidelidad_id
+            type: INTEGER
+        - column:
+            name: ubicacion_id
+            type: INTEGER
+        tableName: cliente
+- changeSet:
+    id: 1760474776931-4
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: detalle_reserva_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: producto_id
+            type: INTEGER
+        - column:
+            name: reserva_id
+            type: INTEGER
+        tableName: detalle_reserva
+- changeSet:
+    id: 1760474776931-5
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: detalle_transaccion_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: cantidad
+            type: FLOAT8
+        - column:
+            name: producto_id
+            type: INTEGER
+        - column:
+            name: venta_id
+            type: INTEGER
+        - column:
+            name: subtotal
+            type: FLOAT8
+        - column:
+            name: descuento
+            type: FLOAT8
+        tableName: detalle_venta
+- changeSet:
+    id: 1760474776931-6
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: estado_reserva_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: nombre
+            type: VARCHAR(255)
+        tableName: estado_reserva
+- changeSet:
+    id: 1760474776931-7
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: lote_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: fecha_ingreso
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: observacion
+            type: VARCHAR(255)
+        tableName: lote
+- changeSet:
+    id: 1760474776931-8
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: metodo_de_pago_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: metodo
+            type: VARCHAR(255)
+        tableName: metodo_de_pago
+- changeSet:
+    id: 1760474776931-9
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: nivel_fidelidad_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: nivel
+            type: VARCHAR(255)
+        tableName: nivel_fidelidad
+- changeSet:
+    id: 1760474776931-10
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: producto_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: descripcion
+            type: VARCHAR(255)
+        - column:
+            name: nombre
+            type: VARCHAR(255)
+        - column:
+            name: precio
+            type: FLOAT8
+        - column:
+            name: tipo_producto_id
+            type: INTEGER
+        tableName: producto
+- changeSet:
+    id: 1760474776931-11
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: reserva_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: adelanto
+            type: FLOAT8
+        - column:
+            name: fecha_limite
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: fecha_reserva
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: cliente_id
+            type: INTEGER
+        - column:
+            name: estado_reserva_id
+            type: INTEGER
+        tableName: reserva
+- changeSet:
+    id: 1760474776931-12
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sublote_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: fecha_vencimiento
+            type: date
+        - column:
+            name: cantidad_inicial
+            type: INTEGER
+        - column:
+            name: costo_unitario
+            type: FLOAT8
+        - column:
+            name: lote_id
+            type: INTEGER
+        - column:
+            name: producto_id
+            type: INTEGER
+        tableName: sublote
+- changeSet:
+    id: 1760474776931-13
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: tipo_producto_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: nombre
+            type: VARCHAR(255)
+        tableName: tipo_producto
+- changeSet:
+    id: 1760474776931-14
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: ubicacion_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: ciudad
+            type: VARCHAR(255)
+        - column:
+            name: zona
+            type: VARCHAR(255)
+        tableName: ubicacion
+- changeSet:
+    id: 1760474776931-15
+    author: Usuario (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: transaccion_pkey
+            name: id
+            type: INTEGER
+        - column:
+            name: fecha
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: total_bruto
+            type: FLOAT8
+        - column:
+            name: cliente_id
+            type: INTEGER
+        - column:
+            name: metodo_de_pago_id
+            type: INTEGER
+        - column:
+            name: total_neto
+            type: FLOAT8
+        - column:
+            name: con_factura
+            type: BOOLEAN
+        - column:
+            name: descuento_total
+            type: FLOAT8
+        tableName: venta
+- changeSet:
+    id: 1760474776931-16
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: tipo_producto_id
+        baseTableName: producto
+        constraintName: fk2em9dpm8qsg21wqf2v1bmshdw
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: tipo_producto
+        validate: true
+- changeSet:
+    id: 1760474776931-17
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: ubicacion_id
+        baseTableName: cliente
+        constraintName: fk2icb4ojg57cpbd6koay8tj0k5
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: ubicacion
+        validate: true
+- changeSet:
+    id: 1760474776931-18
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: reserva_id
+        baseTableName: detalle_reserva
+        constraintName: fk4f0d0afbskh3g9cparmmjibap
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: reserva
+        validate: true
+- changeSet:
+    id: 1760474776931-19
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: metodo_de_pago_id
+        baseTableName: venta
+        constraintName: fk4ompb22wh3ao89kcv67ca7t1u
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: metodo_de_pago
+        validate: true
+- changeSet:
+    id: 1760474776931-20
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: lote_id
+        baseTableName: sublote
+        constraintName: fk5l0hajyqb2v058mcg6ssmdvmf
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: lote
+        validate: true
+- changeSet:
+    id: 1760474776931-21
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: producto_id
+        baseTableName: sublote
+        constraintName: fk6ta85bifh2l74n34mel2fidxu
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: producto
+        validate: true
+- changeSet:
+    id: 1760474776931-22
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: nivel_fidelidad_id
+        baseTableName: cliente
+        constraintName: fk78hvib31gdsjf9bs1kvtu8yqg
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: nivel_fidelidad
+        validate: true
+- changeSet:
+    id: 1760474776931-23
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: cliente_id
+        baseTableName: reserva
+        constraintName: fk7cg2jiyn5cf6f6elccvb6963k
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: cliente
+        validate: true
+- changeSet:
+    id: 1760474776931-24
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: producto_id
+        baseTableName: detalle_venta
+        constraintName: fkavuba48117bv76x8o4k2fgq7n
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: producto
+        validate: true
+- changeSet:
+    id: 1760474776931-25
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: venta_id
+        baseTableName: detalle_venta
+        constraintName: fkga6af87b9ut57bgsu00l5ardd
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: venta
+        validate: true
+- changeSet:
+    id: 1760474776931-26
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: venta_id
+        baseTableName: factura
+        constraintName: fkiy07e8i6y6bsvahr2crdibwcs
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: venta
+        validate: true
+- changeSet:
+    id: 1760474776931-27
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: cliente_id
+        baseTableName: venta
+        constraintName: fkmtibufgj4ih57dxx1djittp4d
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: cliente
+        validate: true
+- changeSet:
+    id: 1760474776931-28
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: producto_id
+        baseTableName: detalle_reserva
+        constraintName: fkr763hw4ty1mg2dya0bnm25jo6
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: producto
+        validate: true
+- changeSet:
+    id: 1760474776931-29
+    author: Usuario (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: estado_reserva_id
+        baseTableName: reserva
+        constraintName: fkt6wl3pk979luk74duj256r0fa
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: id
+        referencedTableName: estado_reserva
+        validate: true
+

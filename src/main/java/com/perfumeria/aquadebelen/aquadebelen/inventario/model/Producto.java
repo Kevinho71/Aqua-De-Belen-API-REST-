@@ -1,8 +1,7 @@
-package com.perfumeria.aquadebelen.aquadebelen.productos.model;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 
 import java.util.List;
 
-import com.perfumeria.aquadebelen.aquadebelen.lotes.model.Sublote;
 import com.perfumeria.aquadebelen.aquadebelen.reserva.model.DetalleReserva;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
 
@@ -52,6 +51,9 @@ public class Producto {
 
     @OneToMany(mappedBy = "producto")
     private List<DetalleReserva> detallesReserva;
+
+    @OneToMany(mappedBy = "producto")
+    private List<PrecioHistorico> preciosHistoricos;
 
     public Producto(double precio, String descripcion, String nombre, TipoProducto tipoProducto) {
         this.precio = precio;

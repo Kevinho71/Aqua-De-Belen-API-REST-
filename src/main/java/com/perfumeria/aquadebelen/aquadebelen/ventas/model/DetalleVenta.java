@@ -1,6 +1,6 @@
     package com.perfumeria.aquadebelen.aquadebelen.ventas.model;
 
-    import com.perfumeria.aquadebelen.aquadebelen.productos.model.Producto;
+    import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 
 import jakarta.persistence.Column;
     import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.productos.DTO;
+package com.perfumeria.aquadebelen.aquadebelen.inventario.DTO;
 
 public record ProductoDTORequest (
     String nombre,
