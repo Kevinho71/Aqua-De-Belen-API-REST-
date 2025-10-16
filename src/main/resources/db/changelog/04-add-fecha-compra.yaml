@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-fecha-column-to-compra-20251016-001
+      author: usuario
+      comment: "Agregar columna fecha a la tabla compra para registrar la fecha de la compra"
+      changes:
+        - addColumn:
+            tableName: compra
+            columns:
+              - column:
+                  name: fecha
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: true
+                  remarks: "Fecha y hora cuando se realizó la compra"
+      rollback:
+        - dropColumn:
+            tableName: compra
+            columnName: fecha

@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/02-inventory-module.yaml
   - include:
       file: db/changelog/03-proveedor-seed-data.yaml
+  - include:
+      file: db/changelog/04-add-fecha-compra.yaml

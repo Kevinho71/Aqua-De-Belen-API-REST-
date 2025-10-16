@@ -1,10 +1,12 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Lote;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Proveedor;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +29,6 @@ import lombok.Setter;
 public class Compra {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -40,7 +41,10 @@ public class Compra {
     @Column(name = "descuento")
     private double descuento;
 
-    @OneToOne
+    @Column(name = "fecha")
+    private LocalDateTime fecha;
+    
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "lote_id")   
     private Lote lote;
 
@@ -48,7 +52,7 @@ public class Compra {
     @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
-    @OneToMany(mappedBy = "compra")
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.PERSIST)
     private List<DetalleCompra> detallesCompra;
 
     public Compra(Integer id, double costoBruto, double descuento, Proveedor proveedor,

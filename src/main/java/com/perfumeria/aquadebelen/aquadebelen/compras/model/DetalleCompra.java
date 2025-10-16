@@ -5,6 +5,7 @@ import org.hibernate.annotations.ManyToAny;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Sublote;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +41,7 @@ public class DetalleCompra {
     @JoinColumn(name = "compra_id")
     private Compra compra;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "sublote_id")
     private Sublote sublote;
 
@@ -48,7 +49,7 @@ public class DetalleCompra {
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
-    @OneToOne(mappedBy = "detalleCompraId")
+    @OneToOne(mappedBy = "detalleCompraId", cascade = CascadeType.PERSIST)
     private Movimiento movimiento;
 
     public DetalleCompra(double costoUnitario, double descuento, Producto producto) {
