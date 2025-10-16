@@ -1,0 +1,211 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-proveedor-seed-data
+      author: usuario
+      comment: "Insertar datos semilla para proveedores - 10 registros iniciales"
+      changes:
+        # Proveedor 1 - Cosméticos La Belleza
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Cosméticos La Belleza S.R.L."
+              - column:
+                  name: correo
+                  value: "ventas@labelleza.com.bo"
+              - column:
+                  name: telefono
+                  value: "4-4521234"
+              - column:
+                  name: nit
+                  value: "1023456789"
+              - column:
+                  name: ubicacion_id
+                  value: 46
+
+        # Proveedor 2 - Distribuidora Aurora
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Distribuidora Aurora Ltda."
+              - column:
+                  name: correo
+                  value: "contacto@aurora.bo"
+              - column:
+                  name: telefono
+                  value: "2-2785643"
+              - column:
+                  name: nit
+                  value: "2034567890"
+              - column:
+                  name: ubicacion_id
+                  value: 52
+
+        # Proveedor 3 - Perfumería Internacional
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Perfumería Internacional S.A."
+              - column:
+                  name: correo
+                  value: "imports@perfumeria.int.bo"
+              - column:
+                  name: telefono
+                  value: "3-3567890"
+              - column:
+                  name: nit
+                  value: "3045678901"
+              - column:
+                  name: ubicacion_id
+                  value: 58
+
+        # Proveedor 4 - Laboratorios Naturales
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Laboratorios Naturales del Oriente"
+              - column:
+                  name: correo
+                  value: "pedidos@labnaturales.bo"
+              - column:
+                  name: telefono
+                  value: "3-3789012"
+              - column:
+                  name: nit
+                  value: "4056789012"
+              - column:
+                  name: ubicacion_id
+                  value: 63
+
+        # Proveedor 5 - Distribuciones Premium
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Distribuciones Premium Ltda."
+              - column:
+                  name: correo
+                  value: "gerencia@premiumbos.com"
+              - column:
+                  name: telefono
+                  value: "4-4890123"
+              - column:
+                  name: nit
+                  value: "5067890123"
+              - column:
+                  name: ubicacion_id
+                  value: 69
+
+        # Proveedor 6 - Importadora Andina
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Importadora Andina S.R.L."
+              - column:
+                  name: correo
+                  value: "compras@andina.com.bo"
+              - column:
+                  name: telefono
+                  value: "2-2901234"
+              - column:
+                  name: nit
+                  value: "6078901234"
+              - column:
+                  name: ubicacion_id
+                  value: 74
+
+        # Proveedor 7 - Cosméticos del Sur
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Cosméticos del Sur Bolivia"
+              - column:
+                  name: correo
+                  value: "ventas@cosmeticossur.bo"
+              - column:
+                  name: telefono
+                  value: "4-4012345"
+              - column:
+                  name: nit
+                  value: "7089012345"
+              - column:
+                  name: ubicacion_id
+                  value: 80
+
+        # Proveedor 8 - Global Beauty Supply
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Global Beauty Supply Ltda."
+              - column:
+                  name: correo
+                  value: "info@globalbeauty.bo"
+              - column:
+                  name: telefono
+                  value: "3-3123456"
+              - column:
+                  name: nit
+                  value: "8090123456"
+              - column:
+                  name: ubicacion_id
+                  value: 85
+
+        # Proveedor 9 - Fragancias Exclusivas
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Fragancias Exclusivas S.A."
+              - column:
+                  name: correo
+                  value: "exclusivas@fragancias.com.bo"
+              - column:
+                  name: telefono
+                  value: "2-2234567"
+              - column:
+                  name: nit
+                  value: "9001234567"
+              - column:
+                  name: ubicacion_id
+                  value: 89
+
+        # Proveedor 10 - Casa de Belleza Nacional
+        - insert:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: nombre
+                  value: "Casa de Belleza Nacional"
+              - column:
+                  name: correo
+                  value: "nacional@casabelleza.bo"
+              - column:
+                  name: telefono
+                  value: "4-4345678"
+              - column:
+                  name: nit
+                  value: "1012345678"
+              - column:
+                  name: ubicacion_id
+                  value: 90
+
+      rollback:
+        - sql:
+            sql: "DELETE FROM proveedor WHERE nit IN ('1023456789', '2034567890', '3045678901', '4056789012', '5067890123', '6078901234', '7089012345', '8090123456', '9001234567', '1012345678');"
+        - sql:
+            comment: "Rollback: Eliminar datos semilla de proveedores"
