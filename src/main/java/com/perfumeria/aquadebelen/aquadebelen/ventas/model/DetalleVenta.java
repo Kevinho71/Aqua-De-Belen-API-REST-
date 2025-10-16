@@ -1,6 +1,7 @@
     package com.perfumeria.aquadebelen.aquadebelen.ventas.model;
 
     import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Sublote;
 
 import jakarta.persistence.Column;
     import jakarta.persistence.Entity;
@@ -9,7 +10,8 @@ import jakarta.persistence.Column;
     import jakarta.persistence.Id;
     import jakarta.persistence.JoinColumn;
     import jakarta.persistence.ManyToOne;
-    import jakarta.persistence.Table;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
     import lombok.AllArgsConstructor;
     import lombok.Getter;
     import lombok.NoArgsConstructor;
@@ -34,7 +36,7 @@ import jakarta.persistence.Column;
         @Column(name = "subtotal")
         private double subtotal;
 
-        @Column(name = "descuento")
+        @Column(name = "descuento") 
         private double descuento;
 
         @ManyToOne
@@ -44,6 +46,7 @@ import jakarta.persistence.Column;
         @ManyToOne
         @JoinColumn(name = "venta_id")
         private Venta venta;
+
 
         @Override
         public String toString() {

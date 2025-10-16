@@ -1,6 +1,9 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 import java.time.*;
 import java.util.List;
+
+import com.perfumeria.aquadebelen.aquadebelen.compras.model.Compra;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,4 +27,7 @@ public class Lote {
     
     @OneToMany(mappedBy = "lote")
     private List<Sublote> sublotes;
+
+    @OneToOne(mappedBy = "lote")
+    private Compra compra;
 }

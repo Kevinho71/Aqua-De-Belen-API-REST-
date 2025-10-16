@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/01-baseline.yaml
+  - include:
+      file: db/changelog/02-inventory-module.yaml

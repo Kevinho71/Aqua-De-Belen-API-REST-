@@ -1,6 +1,8 @@
-package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
+package com.perfumeria.aquadebelen.aquadebelen.compras.model;
 
 import java.time.LocalDateTime;
+
+import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

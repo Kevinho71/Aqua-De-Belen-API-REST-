@@ -1,0 +1,566 @@
+databaseChangeLog:
+  # ==============================================
+  # INVENTARIO MODULE - COMPREHENSIVE CHANGELOG
+  # Author: kevin
+  # Date: 2025-10-15
+  # Description: Adds comprehensive inventory management system
+  # ==============================================
+
+  # 1. CREATE PROVEEDOR TABLE
+  - changeSet:
+      id: create-proveedor-table-20251015-001
+      author: kevin
+      changes:
+        - createTable:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: proveedor_pkey
+              - column:
+                  name: nombre
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: correo
+                  type: VARCHAR(255)
+              - column:
+                  name: telefono
+                  type: VARCHAR(20)
+              - column:
+                  name: nit
+                  type: VARCHAR(20)
+              - column:
+                  name: ubicacion_id
+                  type: INTEGER
+      rollback:
+        - dropTable:
+            tableName: proveedor
+
+  # 2. CREATE COMPRA TABLE
+  - changeSet:
+      id: create-compra-table-20251015-002
+      author: kevin
+      changes:
+        - createTable:
+            tableName: compra
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: compra_pkey
+              - column:
+                  name: costo_bruto
+                  type: FLOAT8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: costo_neto
+                  type: FLOAT8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: descuento
+                  type: FLOAT8
+                  defaultValue: 0.0
+              - column:
+                  name: lote_id
+                  type: INTEGER
+              - column:
+                  name: proveedor_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: compra
+
+  # 3. CREATE DETALLE_COMPRA TABLE
+  - changeSet:
+      id: create-detalle-compra-table-20251015-003
+      author: kevin
+      changes:
+        - createTable:
+            tableName: detalle_compra
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: detalle_compra_pkey
+              - column:
+                  name: costo_unitario
+                  type: FLOAT8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: descuento
+                  type: FLOAT8
+                  defaultValue: 0.0
+              - column:
+                  name: compra_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: sublote_id
+                  type: INTEGER
+              - column:
+                  name: producto_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: detalle_compra
+
+  # 4. CREATE PRECIOS_HISTORICO TABLE
+  - changeSet:
+      id: create-precios-historico-table-20251015-004
+      author: kevin
+      changes:
+        - createTable:
+            tableName: precios_historico
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: precios_historico_pkey
+              - column:
+                  name: precio_venta
+                  type: FLOAT8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fecha
+                  type: TIMESTAMP WITHOUT TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: producto_id
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: precios_historico
+
+  # 5. CREATE MOVIMIENTO TABLE
+  - changeSet:
+      id: create-movimiento-table-20251015-005
+      author: kevin
+      changes:
+        - createTable:
+            tableName: movimiento
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: movimiento_pkey
+              - column:
+                  name: cantidad
+                  type: FLOAT8
+                  constraints:
+                    nullable: false
+              - column:
+                  name: costo_unitario
+                  type: FLOAT8
+              - column:
+                  name: precio_unitario
+                  type: FLOAT8
+              - column:
+                  name: costo_total
+                  type: FLOAT8
+              - column:
+                  name: precio_total
+                  type: FLOAT8
+              - column:
+                  name: fecha
+                  type: TIMESTAMP WITHOUT TIME ZONE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: referencia_tipo
+                  type: VARCHAR(50)
+              - column:
+                  name: detalle_compra_id
+                  type: INTEGER
+              - column:
+                  name: detalle_venta_id
+                  type: INTEGER
+              - column:
+                  name: referencia_id
+                  type: INTEGER
+      rollback:
+        - dropTable:
+            tableName: movimiento
+
+  # 6. MODIFY SUBLOTE TABLE - ADD NEW COLUMNS
+  - changeSet:
+      id: modify-sublote-add-columns-20251015-006
+      author: kevin
+      changes:
+        - addColumn:
+            tableName: sublote
+            columns:
+              - column:
+                  name: fecha_produccion
+                  type: DATE
+              - column:
+                  name: codigo_sublote
+                  type: VARCHAR(100)
+              - column:
+                  name: cantidad_actual
+                  type: FLOAT8
+                  defaultValue: 0.0
+              - column:
+                  name: estado
+                  type: VARCHAR(20)
+                  defaultValue: 'DISPONIBLE'
+      rollback:
+        - dropColumn:
+            tableName: sublote
+            columnName: fecha_produccion
+        - dropColumn:
+            tableName: sublote
+            columnName: codigo_sublote
+        - dropColumn:
+            tableName: sublote
+            columnName: cantidad_actual
+        - dropColumn:
+            tableName: sublote
+            columnName: estado
+
+  # 7. MODIFY SUBLOTE TABLE - CHANGE COLUMN TYPES
+  - changeSet:
+      id: modify-sublote-change-types-20251015-007
+      author: kevin
+      changes:
+        - modifyDataType:
+            tableName: sublote
+            columnName: cantidad_inicial
+            newDataType: FLOAT8
+      rollback:
+        - modifyDataType:
+            tableName: sublote
+            columnName: cantidad_inicial
+            newDataType: INTEGER
+
+  # 8. ADD FOREIGN KEY CONSTRAINTS
+  - changeSet:
+      id: add-foreign-keys-20251015-008
+      author: kevin
+      changes:
+        # Proveedor -> Ubicacion
+        - addForeignKeyConstraint:
+            baseTableName: proveedor
+            baseColumnNames: ubicacion_id
+            constraintName: fk_proveedor_ubicacion
+            referencedTableName: ubicacion
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+        # Compra -> Proveedor
+        - addForeignKeyConstraint:
+            baseTableName: compra
+            baseColumnNames: proveedor_id
+            constraintName: fk_compra_proveedor
+            referencedTableName: proveedor
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+        # Compra -> Lote (One-to-One)
+        - addForeignKeyConstraint:
+            baseTableName: compra
+            baseColumnNames: lote_id
+            constraintName: fk_compra_lote
+            referencedTableName: lote
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        # DetalleCompra -> Compra
+        - addForeignKeyConstraint:
+            baseTableName: detalle_compra
+            baseColumnNames: compra_id
+            constraintName: fk_detalle_compra_compra
+            referencedTableName: compra
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        # DetalleCompra -> Producto
+        - addForeignKeyConstraint:
+            baseTableName: detalle_compra
+            baseColumnNames: producto_id
+            constraintName: fk_detalle_compra_producto
+            referencedTableName: producto
+            referencedColumnNames: id
+            onDelete: RESTRICT
+            onUpdate: CASCADE
+        # DetalleCompra -> Sublote (One-to-One)
+        - addForeignKeyConstraint:
+            baseTableName: detalle_compra
+            baseColumnNames: sublote_id
+            constraintName: fk_detalle_compra_sublote
+            referencedTableName: sublote
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
+        # PreciosHistorico -> Producto
+        - addForeignKeyConstraint:
+            baseTableName: precios_historico
+            baseColumnNames: producto_id
+            constraintName: fk_precios_historico_producto
+            referencedTableName: producto
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        # Movimiento -> DetalleCompra (One-to-One)
+        - addForeignKeyConstraint:
+            baseTableName: movimiento
+            baseColumnNames: detalle_compra_id
+            constraintName: fk_movimiento_detalle_compra
+            referencedTableName: detalle_compra
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
+        # Movimiento -> DetalleVenta (One-to-One)
+        - addForeignKeyConstraint:
+            baseTableName: movimiento
+            baseColumnNames: detalle_venta_id
+            constraintName: fk_movimiento_detalle_venta
+            referencedTableName: detalle_venta
+            referencedColumnNames: id
+            onDelete: SET NULL
+            onUpdate: CASCADE
+      rollback:
+        - dropForeignKeyConstraint:
+            baseTableName: proveedor
+            constraintName: fk_proveedor_ubicacion
+        - dropForeignKeyConstraint:
+            baseTableName: compra
+            constraintName: fk_compra_proveedor
+        - dropForeignKeyConstraint:
+            baseTableName: compra
+            constraintName: fk_compra_lote
+        - dropForeignKeyConstraint:
+            baseTableName: detalle_compra
+            constraintName: fk_detalle_compra_compra
+        - dropForeignKeyConstraint:
+            baseTableName: detalle_compra
+            constraintName: fk_detalle_compra_producto
+        - dropForeignKeyConstraint:
+            baseTableName: detalle_compra
+            constraintName: fk_detalle_compra_sublote
+        - dropForeignKeyConstraint:
+            baseTableName: precios_historico
+            constraintName: fk_precios_historico_producto
+        - dropForeignKeyConstraint:
+            baseTableName: movimiento
+            constraintName: fk_movimiento_detalle_compra
+        - dropForeignKeyConstraint:
+            baseTableName: movimiento
+            constraintName: fk_movimiento_detalle_venta
+
+  # 9. ADD UNIQUE CONSTRAINTS
+  - changeSet:
+      id: add-unique-constraints-20251015-009
+      author: kevin
+      changes:
+        # Lote puede tener solo una compra
+        - addUniqueConstraint:
+            tableName: compra
+            columnNames: lote_id
+            constraintName: uk_compra_lote_unique
+        # Sublote puede tener solo un detalle de compra
+        - addUniqueConstraint:
+            tableName: detalle_compra
+            columnNames: sublote_id
+            constraintName: uk_detalle_compra_sublote_unique
+        # Movimiento con detalle_compra único
+        - addUniqueConstraint:
+            tableName: movimiento
+            columnNames: detalle_compra_id
+            constraintName: uk_movimiento_detalle_compra_unique
+        # Movimiento con detalle_venta único
+        - addUniqueConstraint:
+            tableName: movimiento
+            columnNames: detalle_venta_id
+            constraintName: uk_movimiento_detalle_venta_unique
+      rollback:
+        - dropUniqueConstraint:
+            tableName: compra
+            constraintName: uk_compra_lote_unique
+        - dropUniqueConstraint:
+            tableName: detalle_compra
+            constraintName: uk_detalle_compra_sublote_unique
+        - dropUniqueConstraint:
+            tableName: movimiento
+            constraintName: uk_movimiento_detalle_compra_unique
+        - dropUniqueConstraint:
+            tableName: movimiento
+            constraintName: uk_movimiento_detalle_venta_unique
+
+  # 10. ADD INDEXES FOR PERFORMANCE
+  - changeSet:
+      id: add-performance-indexes-20251015-010
+      author: kevin
+      changes:
+        - createIndex:
+            tableName: sublote
+            indexName: idx_sublote_estado
+            columns:
+              - column:
+                  name: estado
+        - createIndex:
+            tableName: sublote
+            indexName: idx_sublote_fecha_vencimiento
+            columns:
+              - column:
+                  name: fecha_vencimiento
+        - createIndex:
+            tableName: precios_historico
+            indexName: idx_precios_historico_fecha
+            columns:
+              - column:
+                  name: fecha
+        - createIndex:
+            tableName: movimiento
+            indexName: idx_movimiento_fecha
+            columns:
+              - column:
+                  name: fecha
+        - createIndex:
+            tableName: movimiento
+            indexName: idx_movimiento_referencia
+            columns:
+              - column:
+                  name: referencia_tipo
+              - column:
+                  name: referencia_id
+      rollback:
+        - dropIndex:
+            tableName: sublote
+            indexName: idx_sublote_estado
+        - dropIndex:
+            tableName: sublote
+            indexName: idx_sublote_fecha_vencimiento
+        - dropIndex:
+            tableName: precios_historico
+            indexName: idx_precios_historico_fecha
+        - dropIndex:
+            tableName: movimiento
+            indexName: idx_movimiento_fecha
+        - dropIndex:
+            tableName: movimiento
+            indexName: idx_movimiento_referencia
+
+  # 11. ADD CHECK CONSTRAINTS FOR DATA INTEGRITY
+  - changeSet:
+      id: add-check-constraints-20251015-011
+      author: kevin
+      changes:
+        - sql:
+            sql: >
+              ALTER TABLE sublote 
+              ADD CONSTRAINT chk_sublote_cantidad_positiva 
+              CHECK (cantidad_inicial >= 0 AND cantidad_actual >= 0);
+        - sql:
+            sql: >
+              ALTER TABLE sublote 
+              ADD CONSTRAINT chk_sublote_cantidad_logica 
+              CHECK (cantidad_actual <= cantidad_inicial);
+        - sql:
+            sql: >
+              ALTER TABLE sublote 
+              ADD CONSTRAINT chk_sublote_estado_valido 
+              CHECK (estado IN ('AGOTADO', 'DISPONIBLE', 'POCO_CANTIDAD', 'RETIRADO'));
+        - sql:
+            sql: >
+              ALTER TABLE compra 
+              ADD CONSTRAINT chk_compra_costos_positivos 
+              CHECK (costo_bruto >= 0 AND costo_neto >= 0 AND descuento >= 0);
+        - sql:
+            sql: >
+              ALTER TABLE detalle_compra 
+              ADD CONSTRAINT chk_detalle_compra_costo_unitario_positivo 
+              CHECK (costo_unitario >= 0);
+        - sql:
+            sql: >
+              ALTER TABLE precios_historico 
+              ADD CONSTRAINT chk_precios_historico_precio_positivo 
+              CHECK (precio_venta >= 0);
+        - sql:
+            sql: >
+              ALTER TABLE movimiento 
+              ADD CONSTRAINT chk_movimiento_cantidad_positiva 
+              CHECK (cantidad > 0);
+      rollback:
+        - sql:
+            sql: ALTER TABLE sublote DROP CONSTRAINT IF EXISTS chk_sublote_cantidad_positiva;
+        - sql:
+            sql: ALTER TABLE sublote DROP CONSTRAINT IF EXISTS chk_sublote_cantidad_logica;
+        - sql:
+            sql: ALTER TABLE sublote DROP CONSTRAINT IF EXISTS chk_sublote_estado_valido;
+        - sql:
+            sql: ALTER TABLE compra DROP CONSTRAINT IF EXISTS chk_compra_costos_positivos;
+        - sql:
+            sql: ALTER TABLE detalle_compra DROP CONSTRAINT IF EXISTS chk_detalle_compra_costo_unitario_positivo;
+        - sql:
+            sql: ALTER TABLE precios_historico DROP CONSTRAINT IF EXISTS chk_precios_historico_precio_positivo;
+        - sql:
+            sql: ALTER TABLE movimiento DROP CONSTRAINT IF EXISTS chk_movimiento_cantidad_positiva;
+
+  # 12. ADD COMMENTS FOR DOCUMENTATION
+  - changeSet:
+      id: add-table-comments-20251015-012
+      author: kevin
+      changes:
+        - sql:
+            sql: COMMENT ON TABLE proveedor IS 'Tabla de proveedores del sistema';
+        - sql:
+            sql: COMMENT ON TABLE compra IS 'Registro de compras realizadas a proveedores';
+        - sql:
+            sql: COMMENT ON TABLE detalle_compra IS 'Detalles de productos en cada compra';
+        - sql:
+            sql: COMMENT ON TABLE precios_historico IS 'Historial de cambios de precios de productos';
+        - sql:
+            sql: COMMENT ON TABLE movimiento IS 'Registro de movimientos de inventario (entradas/salidas)';
+        - sql:
+            sql: "COMMENT ON COLUMN sublote.estado IS 'Estado del sublote: AGOTADO, DISPONIBLE, POCO_CANTIDAD, RETIRADO';"
+        - sql:
+            sql: COMMENT ON COLUMN sublote.cantidad_actual IS 'Cantidad disponible actual del sublote';
+        - sql:
+            sql: "COMMENT ON COLUMN movimiento.referencia_tipo IS 'Tipo de documento que origina el movimiento (COMPRA, VENTA, AJUSTE)';"
+      rollback:
+        - sql:
+            sql: COMMENT ON TABLE proveedor IS NULL;
+        - sql:
+            sql: COMMENT ON TABLE compra IS NULL;
+        - sql:
+            sql: COMMENT ON TABLE detalle_compra IS NULL;
+        - sql:
+            sql: COMMENT ON TABLE precios_historico IS NULL;
+        - sql:
+            sql: COMMENT ON TABLE movimiento IS NULL;
+        - sql:
+            sql: COMMENT ON COLUMN sublote.estado IS NULL;
+        - sql:
+            sql: COMMENT ON COLUMN sublote.cantidad_actual IS NULL;
+        - sql:
+            sql: COMMENT ON COLUMN movimiento.referencia_tipo IS NULL;

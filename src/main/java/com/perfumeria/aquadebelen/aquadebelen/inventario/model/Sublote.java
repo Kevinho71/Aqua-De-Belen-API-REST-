@@ -2,6 +2,9 @@ package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 
 import java.time.*;
 
+import com.perfumeria.aquadebelen.aquadebelen.compras.model.DetalleCompra;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,19 +33,19 @@ public class Sublote {
     private Integer id;
 
     @Column(name = "fecha_vencimiento")
-    private LocalDateTime fechaVencimiento;
+    private LocalDate fechaVencimiento;
 
     @Column(name = "fecha_produccion")
-    private LocalDateTime fechaProduccion;
+    private LocalDate fechaProduccion;
 
     @Column(name = "codigo_sublote")
     private String codigoSublote;
 
     @Column(name = "cantidad_inicial")
-    private int cantidadInicial;
+    private double cantidadInicial;
 
     @Column(name = "cantidad_actual")
-    private int cantidadActual;
+    private double cantidadActual;
 
     @Column(name = "costo_unitario")
     private double costoUnitario;
@@ -57,4 +61,9 @@ public class Sublote {
     @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
+
+    @OneToOne(mappedBy = "sublote")
+    private DetalleCompra detalleCompra;
+
+
 }
