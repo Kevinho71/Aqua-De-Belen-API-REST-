@@ -1,6 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.DTO;
 
-import java.time.LocalDate;
 
 public record ProductoDTOResponse (
     Integer productoId,

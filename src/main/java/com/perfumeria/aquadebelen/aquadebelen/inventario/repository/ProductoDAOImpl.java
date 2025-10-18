@@ -32,12 +32,6 @@ public class ProductoDAOImpl implements ProductoDAO{
         entityManager.flush();
     }
 
-    @Transactional
-    @Override
-    public void deleteById(Integer id) {
-        entityManager.createQuery("DELETE FROM Producto p WHERE p.id =:data").setParameter("data", id).executeUpdate();
-    }
-
     @Override
     public List<Producto> list() {
        TypedQuery<Producto> query = entityManager.createQuery("SELECT p FROM Producto p", Producto.class);
@@ -51,4 +45,6 @@ public class ProductoDAOImpl implements ProductoDAO{
                 Integer.class);
         return query.getSingleResult() + 1;
     }
+
+
 }

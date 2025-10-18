@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.compras.service;
+/*package com.perfumeria.aquadebelen.aquadebelen.compras.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public class CompraService {
             compra.setId(cDAO.nextId());
             compra.setProveedor(pDAO.findById(req.proveedorId()));
             compra.setFecha(LocalDateTime.now());
-            compra.setTotalBruto(calcularTotalBruto(req.detalles()));
+            compra.setCostoBruto(calcularCostoBruto(req.detalles()));
             compra.setMetodoDePago(mpDAO.findById(req.metodoDePagoId()));
             compra.setConFactura(req.conFactura());
             agregarDetalles(req.detalles(), compra);
@@ -51,7 +51,7 @@ public class CompraService {
             compra = cDAO.findById(id);
             compra.setCliente(cDAO.findById(req.clienteId()));
             compra.setMetodoDePago(mpDAO.findById(req.metodoDePagoId()));
-            compra.setTotalBruto(calcularTotalBruto(req.detalles()));
+            compra.setTotalBruto(calcularCostoBruto(req.detalles()));
             compra.setConFactura(req.conFactura());
             actualizarDetalles(req.detalles(), compra);
             compra.setTotalNeto(compra.getTotalBruto() - compra.getDescuentoTotal());
@@ -61,17 +61,17 @@ public class CompraService {
         return mapToDtoResponse(Ventas2);
     }
 
-    public double calcularTotalBruto(List<DetalleCompraDTORequest> detalles) {
-        double totalBruto = 0;
+    public double calcularCostoBruto(List<DetalleCompraDTORequest> detalles) {
+        double costoBruto = 0;
         for (DetalleCompraDTORequest dt : detalles) {
 
             // AQUI CREAMOS UN NUEVO PRODUCTO CON EL FIN DE HALLAR SU PRECIO Y VAMOS
             // CALCULANDO EL TOTAL BRUTO
             Producto producto = cDAO.findById(dt.productoId());
             double subtotal = producto.getPrecio() * dt.cantidad();
-            totalBruto = totalBruto + subtotal;
+            costoBruto = costoBruto + subtotal;
         }
-        return totalBruto;
+        return costoBruto;
     }
 
     public void agregarDetalles(List<DetalleCompraDTORequest> detalles, Compra compra) {
@@ -132,3 +132,4 @@ public class CompraService {
     }
 
 }
+*/

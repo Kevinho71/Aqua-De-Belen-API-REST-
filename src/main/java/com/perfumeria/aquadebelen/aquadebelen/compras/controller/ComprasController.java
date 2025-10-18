@@ -1,4 +1,4 @@
-package com.perfumeria.aquadebelen.aquadebelen.compras.controller;
+/*package com.perfumeria.aquadebelen.aquadebelen.compras.controller;
 
 import java.util.List;
 
@@ -70,3 +70,4 @@ public class ComprasController {
     }
 
 }
+*/

@@ -1,10 +1,13 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.perfumeria.aquadebelen.aquadebelen.compras.model.PrecioHistorico;
+import com.perfumeria.aquadebelen.aquadebelen.compras.repository.PrecioHistoricoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTORequest;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTOResponse;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
@@ -17,10 +20,12 @@ public class ProductoService {
 
     private final ProductoDAO pDAO;
     private final TipoProductoDAO tpDAO;
+    private final PrecioHistoricoDAO phDAO;
 
-    public ProductoService(ProductoDAO pDAO, TipoProductoDAO tpDAO) {
+    public ProductoService(ProductoDAO pDAO, TipoProductoDAO tpDAO, PrecioHistoricoDAO phDAO) {
         this.pDAO = pDAO;
         this.tpDAO = tpDAO;
+        this.phDAO = phDAO;
     }
 
 
@@ -29,30 +34,36 @@ public class ProductoService {
         Producto producto = new Producto();
         if (id == null) {
             producto.setId(pDAO.nextId());
-            producto.setPrecio(req.precio());
+         //   producto.setPrecio(req.precio()); //IR QUITANDO ESTE CAMPO PROGRESIVAMENTE
             producto.setDescripcion(req.descripcion());
             producto.setNombre(req.nombre());
             producto.setTipoProducto(tpDAO.findById(req.tipoProductoId()));
             pDAO.store(producto);
+            agregarPrecioHistorico(producto, req.precio()); 
         } else {
             producto = pDAO.findById(id);
-            producto.setPrecio(req.precio());
+         //   producto.setPrecio(req.precio());
             producto.setDescripcion(req.descripcion());
             producto.setNombre(req.nombre());
             producto.setTipoProducto(tpDAO.findById(req.tipoProductoId()));
             pDAO.store(producto);
+            agregarPrecioHistorico(producto, req.precio());
         }
         Producto producto2 = pDAO.findById(producto.getId());
         return mapToDtoResponse(producto2);
     }
 
 
-    // BORRAR UNA Ventas
-    public void borrar(Integer id) {
-        pDAO.deleteById(id);
+    public void agregarPrecioHistorico(Producto producto, double precio){
+        PrecioHistorico ph = new PrecioHistorico();
+        ph.setProducto(producto);
+        ph.setPrecioVenta(precio);
+        ph.setFecha(LocalDateTime.now());
+        producto.addPrecioHistorico(ph);
+        phDAO.save(ph);
     }
 
-    // BUSCAR UNA Ventas
+    // BUSCAR UN PRODUCTO
     public ProductoDTOResponse buscar(Integer id) {
         Producto producto = pDAO.findById(id);
         return mapToDtoResponse(producto);
@@ -69,9 +80,8 @@ public class ProductoService {
     }
 
     public ProductoDTOResponse mapToDtoResponse(Producto producto) {
-
         return new ProductoDTOResponse(producto.getId(),
-                producto.getPrecio(), producto.getDescripcion(),
+                phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta(), producto.getDescripcion(),
                 producto.getNombre(), producto.getTipoProducto().getNombre());
     }
 }

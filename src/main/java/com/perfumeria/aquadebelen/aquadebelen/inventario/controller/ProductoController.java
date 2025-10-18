@@ -54,11 +54,6 @@ public class ProductoController {
         return ResponseEntity.ok(pvm);
     }
 
-    @DeleteMapping("/productos/{id}")
-    public void borrar(@PathVariable("id") @Min(1) Integer id) {
-        productoService.borrar(id);
-    }
-
     @GetMapping("/productos")
     public ResponseEntity<List<ListProductoViewModel>> listar() {
         List<ProductoDTOResponse> resp = productoService.listar();

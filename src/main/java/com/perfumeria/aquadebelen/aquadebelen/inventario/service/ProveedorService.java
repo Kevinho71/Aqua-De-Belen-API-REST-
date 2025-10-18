@@ -45,10 +45,6 @@ public class ProveedorService {
         return mapToDtoResponse(proveedor2);
     }
 
-    public void borrar(Integer id) {
-        pDAO.deleteById(id);
-    }
-
     public ProveedorDTOResponse buscar(Integer id) {
         Proveedor proveedor = pDAO.findById(id);
         return mapToDtoResponse(proveedor);

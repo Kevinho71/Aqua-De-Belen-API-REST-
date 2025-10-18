@@ -49,10 +49,6 @@ public class ProveedorController {
         return ResponseEntity.ok(pvm);
     }
 
-    @DeleteMapping("/proveedor/{id}")
-    public void borrar(@PathVariable("id") @Min(1) Integer id) {
-        proveedorService.borrar(id);
-    }
 
     @GetMapping("/proveedor")
     public ResponseEntity<List<ProveedorViewModel>> listar() {

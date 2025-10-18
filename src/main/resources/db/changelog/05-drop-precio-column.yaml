@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-precio-column-from-producto-20251018-001
+      author: usuario
+      comment: "Eliminar columna precio de la tabla producto. Justificación: Migración completa a sistema de precios históricos. Los precios ahora se obtienen mediante consulta a la tabla precios_historico ordenados por fecha DESC."
+      changes:
+        - dropColumn:
+            tableName: producto
+            columnName: precio
+            
+      rollback:
+        - addColumn:
+            tableName: producto
+            columns:
+              - column:
+                  name: precio
+                  type: FLOAT8
+                  constraints:
+                    nullable: true
+                  remarks: "Precio del producto (campo restaurado en rollback)"

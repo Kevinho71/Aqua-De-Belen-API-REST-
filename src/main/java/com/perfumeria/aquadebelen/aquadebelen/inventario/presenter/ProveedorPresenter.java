@@ -3,9 +3,12 @@ package com.perfumeria.aquadebelen.aquadebelen.inventario.presenter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProveedorDTOResponse;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ProveedorViewModel;
 
+@Component
 public class ProveedorPresenter {
     
     public ProveedorViewModel present(ProveedorDTOResponse res) {

@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
+import com.perfumeria.aquadebelen.aquadebelen.compras.model.PrecioHistorico;
+import com.perfumeria.aquadebelen.aquadebelen.compras.repository.PrecioHistoricoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaRequest;
@@ -24,12 +26,14 @@ public class VentaService {
     private final MetodoDePagoDAO mpDAO;
     private final ClienteDAO cDAO;
     private final ProductoDAO pDAO;
+    private final PrecioHistoricoDAO phDAO;
 
-    public VentaService(VentaDAO tDAO, MetodoDePagoDAO mpDAO, ClienteDAO cDAO, ProductoDAO pDAO) {
+    public VentaService(VentaDAO tDAO, MetodoDePagoDAO mpDAO, ClienteDAO cDAO, ProductoDAO pDAO, PrecioHistoricoDAO phDAO) {
         this.tDAO = tDAO;
         this.mpDAO = mpDAO;
         this.cDAO = cDAO;
         this.pDAO = pDAO;
+        this.phDAO = phDAO;
 
     }
 
@@ -66,7 +70,7 @@ public class VentaService {
             // AQUI CREAMOS UN NUEVO PRODUCTO CON EL FIN DE HALLAR SU PRECIO Y VAMOS
             // CALCULANDO EL TOTAL BRUTO
             Producto producto = pDAO.findById(dt.productoId());
-            double subtotal = producto.getPrecio() * dt.cantidad();
+            double subtotal = phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta() * dt.cantidad();
             totalBruto = totalBruto + subtotal;
         }
         return totalBruto;
@@ -81,7 +85,7 @@ public class VentaService {
             detalle.setCantidad(dt.cantidad());
             detalle.setProducto(producto);
             detalle.setDescuento(dt.descuento());
-            double subtotal = (producto.getPrecio() * dt.cantidad())-dt.descuento();
+            double subtotal = (phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta() * dt.cantidad())-dt.descuento();
             detalle.setSubtotal(subtotal);
             descuentoTotal=descuentoTotal+dt.descuento();
             venta.addDetalle(detalle);
@@ -120,7 +124,7 @@ public class VentaService {
         List<DetalleVentaResponse> listResp = new ArrayList<>();
         for (DetalleVenta dt : venta.getDetallesVentas()) {
             DetalleVentaResponse dtr = new DetalleVentaResponse(dt.getVenta().getId(), dt.getId(),
-                    dt.getProducto().getNombre(), dt.getProducto().getPrecio(), dt.getCantidad(), dt.getDescuento(), dt.getSubtotal());
+                    dt.getProducto().getNombre(), phDAO.findUltimoPrecioByProductoId(dt.getProducto().getId()).getPrecioVenta(), dt.getCantidad(), dt.getDescuento(), dt.getSubtotal());
             listResp.add(dtr);
         }
         return new VentaResponse(venta.getId(),
