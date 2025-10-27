@@ -26,7 +26,7 @@ public class Producto {
 
     @Id
     @Column(name = "id")
-    private Integer id; // ← ID manual (sin @GeneratedValue)
+    private Integer id; // ID manual (sin @GeneratedValue)
 
     @Column(name = "precio")
     private Double precio;
@@ -57,6 +57,7 @@ public class Producto {
         this.tipoProducto = tipoProducto;
     }
 }
+
 
 /*package com.perfumeria.aquadebelen.aquadebelen.model.productos.domain;
 

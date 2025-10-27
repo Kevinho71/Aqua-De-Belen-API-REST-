@@ -36,7 +36,7 @@ public class ProductQueryService {
                 p.getId(),
                 p.getNombre(),
                 p.getDescripcion(),
-                p.getPrecio(),
+                p.getPrecio() == null ? 0.0 : p.getPrecio(),
                 stockMap.getOrDefault(p.getId(), 0),
                 p.getTipoProducto() != null ? p.getTipoProducto().getNombre() : null
             )

@@ -31,21 +31,17 @@ public class ProductWriteService {
      */
     @Transactional
     public Integer create(ProductCreateRequest req){
-        // Validaciones mínimas (opcional)
         if (req == null) throw new IllegalArgumentException("Request nulo");
         if (req.tipoProductoId() == null) throw new IllegalArgumentException("tipoProductoId es requerido");
 
-        // Cargar TipoProducto
         TipoProducto tp = tipoProductoDAO.findById(req.tipoProductoId());
         if (tp == null) throw new IllegalArgumentException("TipoProducto no encontrado: " + req.tipoProductoId());
 
-        // Construir la entidad alineada a tus columnas (descripcion, nombre, precio, tipo_producto_id)
         Producto p = new Producto(req.price(), req.brandOrDescription(), req.name(), tp);
 
-        // 🔸 Asignar ID manual antes de persistir (clave del paso 3)
+        // asignación manual del ID
         p.setId(productoDAO.nextId());
 
-        // Persistir
         productoDAO.save(p);
         return p.getId();
     }

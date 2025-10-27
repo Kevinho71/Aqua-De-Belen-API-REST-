@@ -1,6 +1,7 @@
 package com.perfumeria.aquadebelen.aquadebelen.api.dashboard;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -23,35 +24,36 @@ public class DashboardService {
                 .getSingleResult();
 
         long stockBajo = em.createQuery("""
-                select count(distinct p.id)
-                from Sublote s
-                join s.producto p
-                group by p.id
-                having coalesce(sum(s.cantidad),0) < 5
-                """, Long.class)
-                .getResultStream().mapToLong(x -> x).sum();
+                select count(p)
+                from Producto p
+                where (
+                  coalesce((select sum(s.cantidad) from Sublote s where s.producto.id = p.id),0)
+                ) < 5
+                """, Long.class).getSingleResult();
 
-        // ventas totales (no negativas)
         Double ventasTotales = em.createQuery("""
                 select coalesce(sum(t.monto),0)
                 from Transaccion t
                 """, Double.class).getSingleResult();
-        if (ventasTotales == null) ventasTotales = 0d;
-        if (ventasTotales < 0) ventasTotales = 0d; // clamp para evitar negativos en pantalla
+        if (ventasTotales == null || ventasTotales < 0) ventasTotales = 0d;
+
+        // Rango de hoy [00:00, 24:00)
+        LocalDateTime start = LocalDate.now().atStartOfDay();
+        LocalDateTime end   = start.plusDays(1);
 
         long ventasHoy = em.createQuery("""
                 select count(t)
                 from Transaccion t
-                where date(t.fecha) = :hoy
+                where t.fecha >= :start and t.fecha < :end
                 """, Long.class)
-                .setParameter("hoy", LocalDate.now())
+                .setParameter("start", start)
+                .setParameter("end", end)
                 .getSingleResult();
 
         return new DashboardResumenDTO(totalProductos, stockBajo, ventasTotales, ventasHoy);
     }
 
     public List<VentaRecienteDTO> ventasRecientes(int limit) {
-        // Por transacción: nombre del primer producto (o "Varios"), cantidad total y total
         List<Tuple> rows = em.createQuery("""
                 select t.id as id,
                        t.fecha as fecha,
