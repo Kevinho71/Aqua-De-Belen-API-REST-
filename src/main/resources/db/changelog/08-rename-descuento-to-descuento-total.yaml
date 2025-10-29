@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-descuento-to-descuento-total-compra-20251018-001
+      author: usuario
+      comment: "Renombrar columna descuento a descuento_total en la tabla compra para mayor claridad semántica"
+      changes:
+        - renameColumn:
+            tableName: compra
+            oldColumnName: descuento
+            newColumnName: descuento_total
+            columnDataType: FLOAT8
+            remarks: "Descuento total aplicado a la compra (suma de descuentos de los detalles)"
+                  
+      rollback:
+        - renameColumn:
+            tableName: compra
+            oldColumnName: descuento_total
+            newColumnName: descuento
+            columnDataType: FLOAT8

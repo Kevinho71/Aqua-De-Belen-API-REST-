@@ -9,3 +9,11 @@ databaseChangeLog:
       file: db/changelog/04-add-fecha-compra.yaml
   - include:
       file: db/changelog/05-drop-precio-column.yaml
+  - include:
+      file: db/changelog/06-add-cantidad-detalle-compra.yaml
+  - include:
+      file: db/changelog/07-add-subtotal-detalle-compra.yaml
+  - include:
+      file: db/changelog/08-rename-descuento-to-descuento-total.yaml
+  - include:
+      file: db/changelog/09-change-cantidad-type-to-double.yaml

@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 09-change-cantidad-type-to-double
+      author: kevin
+      comment: "Cambiar el tipo de dato de la columna cantidad de INTEGER a DOUBLE en detalle_compra para permitir cantidades decimales"
+      changes:
+        - modifyDataType:
+            tableName: detalle_compra
+            columnName: cantidad
+            newDataType: double precision
+      rollback:
+        - modifyDataType:
+            tableName: detalle_compra
+            columnName: cantidad
+            newDataType: integer

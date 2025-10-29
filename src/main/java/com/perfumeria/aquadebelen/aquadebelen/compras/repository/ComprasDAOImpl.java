@@ -48,7 +48,7 @@ public class ComprasDAOImpl implements ComprasDAO{
 
     @Override
     public Integer nextId() {
-       TypedQuery<Integer> query = entityManager.createQuery("SELECT COALESCE(MAX(p.id), 0) FROM Compra c ",
+       TypedQuery<Integer> query = entityManager.createQuery("SELECT COALESCE(MAX(c.id), 0) FROM Compra c ",
                 Integer.class);
         return query.getSingleResult() + 1;
     }

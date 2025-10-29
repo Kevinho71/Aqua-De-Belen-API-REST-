@@ -1,6 +1,7 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Lote;
@@ -9,8 +10,7 @@ import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Proveedor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -38,13 +38,14 @@ public class Compra {
     @Column(name = "costo_neto")
     private double costoNeto;
 
-    @Column(name = "descuento")
-    private double descuento;
+    @Column(name = "descuento_total")
+    private double descuentoTotal;
 
     @Column(name = "fecha")
     private LocalDateTime fecha;
     
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
+    //(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "lote_id")   
     private Lote lote;
 
@@ -52,17 +53,26 @@ public class Compra {
     @JoinColumn(name = "proveedor_id")
     private Proveedor proveedor;
 
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<DetalleCompra> detallesCompra;
 
-    public Compra(Integer id, double costoBruto, double descuento, Proveedor proveedor,
+
+    public Compra(Integer id, double costoBruto, double descuentoTotal, Proveedor proveedor,
             List<DetalleCompra> detallesCompra) {
         this.id = id;
         this.costoBruto = costoBruto;
-        this.descuento = descuento;
+        this.descuentoTotal = descuentoTotal;
         this.proveedor = proveedor;
         this.detallesCompra = detallesCompra;
     }
 
-    
+    public void addDetalle(DetalleCompra detalleCompra){
+        if(this.detallesCompra==null){
+            List<DetalleCompra> detalles = new ArrayList<>();
+            this.setDetallesCompra(detalles);
+        }
+
+        detallesCompra.add(detalleCompra);
+        detalleCompra.setCompra(this);
+    }
 }

@@ -1,4 +1,4 @@
-/*package com.perfumeria.aquadebelen.aquadebelen.compras.controller;
+package com.perfumeria.aquadebelen.aquadebelen.compras.controller;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perfumeria.aquadebelen.aquadebelen.compras.DTO.CompraDTORequest;
@@ -24,6 +25,7 @@ import jakarta.validation.constraints.Min;
 
 @Validated
 @RestController
+@RequestMapping("/api/v1")
 public class ComprasController {
 
     private final CompraService compraService;
@@ -38,7 +40,7 @@ public class ComprasController {
     public ResponseEntity<CompraViewModel> registrar(@Valid @RequestBody CompraDTORequest req) {
         CompraDTOResponse resp = compraService.store(null, req);
         CompraViewModel cvm = compraPresenter.present(resp);
-        return ResponseEntity.ok(cvm);
+        return ResponseEntity.ok(cvm);  
     }
 
     @PutMapping("/compras/{id}")
@@ -70,4 +72,3 @@ public class ComprasController {
     }
 
 }
-*/

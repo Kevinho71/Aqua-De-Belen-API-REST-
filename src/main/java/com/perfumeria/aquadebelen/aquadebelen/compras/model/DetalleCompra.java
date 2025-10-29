@@ -31,11 +31,17 @@ public class DetalleCompra {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "cantidad")
+    private double cantidad;
+
     @Column(name = "costo_unitario")
     private double costoUnitario;
 
     @Column(name = "descuento")
     private double descuento;
+
+    @Column(name="subtotal")
+    private double subtotal;
 
     @ManyToOne
     @JoinColumn(name = "compra_id")
