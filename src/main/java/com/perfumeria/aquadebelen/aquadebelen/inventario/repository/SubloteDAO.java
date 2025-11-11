@@ -15,4 +15,8 @@ public interface SubloteDAO {
     Integer nextId();
     
     Sublote findProximoAVencerByProductoId(Integer productoId);
+    
+    List<Sublote> findDisponibles();
+    
+    List<Sublote> findProximosAVencer(Integer dias);
 }

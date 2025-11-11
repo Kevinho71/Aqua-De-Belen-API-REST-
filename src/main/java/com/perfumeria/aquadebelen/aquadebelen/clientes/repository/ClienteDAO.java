@@ -11,4 +11,5 @@ public interface ClienteDAO {
     List<Cliente> findAll();
     void deleteById(Integer id);
     Integer nextId();
+    List<Cliente> findByFiltros(String nombre, String apellido, String nitCi);
 }

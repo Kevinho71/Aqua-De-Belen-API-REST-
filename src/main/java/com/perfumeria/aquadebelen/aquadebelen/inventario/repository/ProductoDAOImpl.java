@@ -46,5 +46,28 @@ public class ProductoDAOImpl implements ProductoDAO{
         return query.getSingleResult() + 1;
     }
 
+    @Override
+    public List<Producto> findByFiltros(String nombre, Integer tipoProductoId) {
+        StringBuilder jpql = new StringBuilder("SELECT p FROM Producto p WHERE 1=1");
+        
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            jpql.append(" AND LOWER(p.nombre) LIKE LOWER(:nombre)");
+        }
+        if (tipoProductoId != null) {
+            jpql.append(" AND p.tipoProducto.id = :tipoProductoId");
+        }
+        
+        TypedQuery<Producto> query = entityManager.createQuery(jpql.toString(), Producto.class);
+        
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            query.setParameter("nombre", "%" + nombre + "%");
+        }
+        if (tipoProductoId != null) {
+            query.setParameter("tipoProductoId", tipoProductoId);
+        }
+        
+        return query.getResultList();
+    }
+
 
 }

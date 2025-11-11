@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perfumeria.aquadebelen.aquadebelen.clientes.DTO.ClienteDTORequest;
@@ -68,5 +69,15 @@ public class ClienteController {
         ClienteDTOResponse resp = clienteService.buscar(id);
         ClienteViewModel cvm = clientePresenter.present(resp);
         return ResponseEntity.ok(cvm);
+    }
+
+    @GetMapping("/clientes/buscar")
+    public ResponseEntity<List<ListClienteViewModel>> buscarPorFiltros(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String apellido,
+            @RequestParam(required = false) String nitCi) {
+        List<ClienteDTOResponse> resp = clienteService.buscarPorFiltros(nombre, apellido, nitCi);
+        List<ListClienteViewModel> ltvm = clientePresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
     }
 }

@@ -14,10 +14,17 @@ public class CorsConfig {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")
-                        .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
-                        .allowedHeaders("*");
+                registry.addMapping("/api/**")
+                        .allowedOrigins(
+                            "http://localhost:3000",     // React
+                            "http://localhost:5173",     // Vite
+                            "http://localhost:4200",     // Angular
+                            "http://localhost:8081"      // Vue
+                        )
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true)
+                        .maxAge(3600);
             }
             
         };

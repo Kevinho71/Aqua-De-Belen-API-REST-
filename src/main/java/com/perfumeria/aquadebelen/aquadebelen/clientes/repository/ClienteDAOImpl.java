@@ -60,4 +60,37 @@ public class ClienteDAOImpl implements ClienteDAO {
             "SELECT COALESCE(MAX(c.id), 0) FROM Cliente c", Integer.class);
         return query.getSingleResult() + 1;
     }
+
+    @Override
+    public List<Cliente> findByFiltros(String nombre, String apellido, String nitCi) {
+        StringBuilder jpql = new StringBuilder("SELECT c FROM Cliente c WHERE 1=1");
+        
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            jpql.append(" AND LOWER(c.nombre) LIKE LOWER(:nombre)");
+        }
+        
+        if (apellido != null && !apellido.trim().isEmpty()) {
+            jpql.append(" AND LOWER(c.apellido) LIKE LOWER(:apellido)");
+        }
+        
+        if (nitCi != null && !nitCi.trim().isEmpty()) {
+            jpql.append(" AND c.nitCi = :nitCi");
+        }
+        
+        TypedQuery<Cliente> query = entityManager.createQuery(jpql.toString(), Cliente.class);
+        
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            query.setParameter("nombre", "%" + nombre + "%");
+        }
+        
+        if (apellido != null && !apellido.trim().isEmpty()) {
+            query.setParameter("apellido", "%" + apellido + "%");
+        }
+        
+        if (nitCi != null && !nitCi.trim().isEmpty()) {
+            query.setParameter("nitCi", nitCi);
+        }
+        
+        return query.getResultList();
+    }
 }

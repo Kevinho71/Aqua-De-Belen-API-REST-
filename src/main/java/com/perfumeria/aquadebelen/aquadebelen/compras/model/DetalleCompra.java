@@ -1,6 +1,6 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.model;
 
-import org.hibernate.annotations.ManyToAny;
+import java.time.LocalDate;
 
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Sublote;
@@ -40,12 +40,14 @@ public class DetalleCompra {
     @Column(name="subtotal")
     private double subtotal;
 
+    @Column(name = "fecha_vencimiento")
+    private LocalDate fechaVencimiento;
+
     @ManyToOne
     @JoinColumn(name = "compra_id")
     private Compra compra;
 
-    @OneToOne
-    @JoinColumn(name = "sublote_id")
+    @OneToOne(mappedBy = "detalleCompra")
     private Sublote sublote;
 
     @ManyToOne

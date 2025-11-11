@@ -63,6 +63,17 @@ public class ClienteService {
         return mapToDTOResponse(cliente);
     }
 
+    public List<ClienteDTOResponse> buscarPorFiltros(String nombre, String apellido, String nitCi) {
+        List<Cliente> clientes = clienteDAO.findByFiltros(nombre, apellido, nitCi);
+        List<ClienteDTOResponse> response = new ArrayList<>();
+        
+        for (Cliente cliente : clientes) {
+            response.add(mapToDTOResponse(cliente));
+        }
+        
+        return response;
+    }
+
     public List<ClienteDTOResponse> listar() {
         List<Cliente> clientes = clienteDAO.findAll();
         List<ClienteDTOResponse> response = new ArrayList<>();

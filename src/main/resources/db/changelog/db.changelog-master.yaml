@@ -25,3 +25,7 @@ databaseChangeLog:
       file: db/changelog/12-seed-precios-historico.yaml
   - include:
       file: db/changelog/13-drop-observacion-lote.yaml
+  - include:
+      file: db/changelog/14-add-fecha-vencimiento-detalle-compra.yaml
+  - include:
+      file: db/changelog/15-invertir-relacion-sublote-detalle.yaml

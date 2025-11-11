@@ -96,6 +96,7 @@ public class CompraService {
             detalle.setCostoUnitario(dt.costoUnitario());
             detalle.setDescuento(dt.descuento());
             detalle.setProducto(producto);
+            detalle.setFechaVencimiento(dt.vencimiento());
             double subtotal = (dt.costoUnitario() * dt.cantidad()) - dt.descuento();
             detalle.setSubtotal(subtotal);
             descuentoTotal = descuentoTotal + dt.descuento();

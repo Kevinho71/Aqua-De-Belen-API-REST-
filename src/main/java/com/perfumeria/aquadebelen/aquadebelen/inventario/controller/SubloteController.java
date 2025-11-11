@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.SubloteDTOResponse;
@@ -42,5 +43,20 @@ public class SubloteController {
         SubloteDTOResponse resp = subloteService.buscar(id);
         SubloteViewModel svm = sublotePresenter.present(resp);
         return ResponseEntity.ok(svm);
+    }
+
+    @GetMapping("/sublotes/disponibles")
+    public ResponseEntity<List<ListSubloteViewModel>> listarDisponibles() {
+        List<SubloteDTOResponse> resp = subloteService.findDisponibles();
+        List<ListSubloteViewModel> ltvm = sublotePresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
+    }
+
+    @GetMapping("/sublotes/proximos-vencer")
+    public ResponseEntity<List<ListSubloteViewModel>> listarProximosAVencer(
+            @RequestParam(required = false, defaultValue = "30") Integer dias) {
+        List<SubloteDTOResponse> resp = subloteService.findProximosAVencer(dias);
+        List<ListSubloteViewModel> ltvm = sublotePresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
     }
 }

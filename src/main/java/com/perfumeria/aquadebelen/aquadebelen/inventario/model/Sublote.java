@@ -3,7 +3,6 @@ package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 import java.time.*;
 
 import com.perfumeria.aquadebelen.aquadebelen.compras.model.DetalleCompra;
-import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,7 +58,8 @@ public class Sublote {
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
-    @OneToOne(mappedBy = "sublote")
+    @OneToOne
+    @JoinColumn(name = "detalle_compra_id")
     private DetalleCompra detalleCompra;
 
 

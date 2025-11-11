@@ -9,4 +9,5 @@ public interface ProductoDAO {
     void store(Producto producto);
     List<Producto> list();
     Integer nextId();
+    List<Producto> findByFiltros(String nombre, Integer tipoProductoId);
 }

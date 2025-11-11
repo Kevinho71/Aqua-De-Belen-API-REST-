@@ -79,6 +79,16 @@ public class ProductoService {
         return listaResp;
     }
 
+    public List<ProductoDTOResponse> buscarPorFiltros(String nombre, Integer tipoProductoId) {
+        List<Producto> lista = pDAO.findByFiltros(nombre, tipoProductoId);
+        List<ProductoDTOResponse> listaResp = new ArrayList<>();
+        for (Producto p : lista) {
+            ProductoDTOResponse e = mapToDtoResponse(p);
+            listaResp.add(e);
+        }
+        return listaResp;
+    }
+
     public ProductoDTOResponse mapToDtoResponse(Producto producto) {
         return new ProductoDTOResponse(producto.getId(),
                 phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta(), producto.getDescripcion(),

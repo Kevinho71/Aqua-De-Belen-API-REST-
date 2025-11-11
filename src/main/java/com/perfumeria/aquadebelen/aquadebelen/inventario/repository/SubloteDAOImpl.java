@@ -1,5 +1,6 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,29 @@ public class SubloteDAOImpl implements SubloteDAO{
         query.setMaxResults(1);
         List<Sublote> resultados = query.getResultList();
         return resultados.isEmpty() ? null : resultados.get(0);
+    }
+
+    @Override
+    public List<Sublote> findDisponibles() {
+        TypedQuery<Sublote> query = entityManager.createQuery(
+                "SELECT s FROM Sublote s WHERE s.cantidadActual > 0 " +
+                "AND s.estado != 'AGOTADO' ORDER BY s.fechaVencimiento ASC", 
+                Sublote.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Sublote> findProximosAVencer(Integer dias) {
+        LocalDate fechaLimite = LocalDate.now().plusDays(dias);
+        TypedQuery<Sublote> query = entityManager.createQuery(
+                "SELECT s FROM Sublote s WHERE s.cantidadActual > 0 " +
+                "AND s.estado != 'AGOTADO' " +
+                "AND s.fechaVencimiento <= :fechaLimite " +
+                "AND s.fechaVencimiento >= CURRENT_DATE " +
+                "ORDER BY s.fechaVencimiento ASC", 
+                Sublote.class);
+        query.setParameter("fechaLimite", fechaLimite);
+        return query.getResultList();
     }
 
 }

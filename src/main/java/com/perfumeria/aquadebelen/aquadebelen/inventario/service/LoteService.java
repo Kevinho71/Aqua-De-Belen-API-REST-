@@ -48,12 +48,13 @@ public class LoteService {
             sublote.setEstado(EstadoSublote.DISPONIBLE);
             sublote.setCodigoSublote(generarCodigoSublote(lote.getId(), detalle.getProducto().getId()));
             sublote.setFechaProduccion(LocalDate.now());
-            sublote.setFechaVencimiento(LocalDate.now().plusYears(2));
+            sublote.setFechaVencimiento(detalle.getFechaVencimiento());
             
-            // Usar el método addSublote para establecer la relación bidireccional
+            // Establecer la relación bidireccional DetalleCompra ↔ Sublote
+            sublote.setDetalleCompra(detalle);
+            
+            // Usar el método addSublote para establecer la relación bidireccional Lote ↔ Sublote
             lote.addSublote(sublote);
-            // NO establecemos detalle.setSublote() aquí para evitar múltiples representaciones
-            // Se establecerá después del persist en CompraService
         }
     }
 

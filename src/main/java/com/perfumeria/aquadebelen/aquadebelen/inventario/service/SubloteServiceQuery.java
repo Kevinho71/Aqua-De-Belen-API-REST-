@@ -36,6 +36,28 @@ public class SubloteServiceQuery {
         return response;
     }
 
+    public List<SubloteDTOResponse> findDisponibles() {
+        List<Sublote> sublotes = subloteDAO.findDisponibles();
+        List<SubloteDTOResponse> response = new ArrayList<>();
+        
+        for (Sublote sublote : sublotes) {
+            response.add(mapToDTOResponse(sublote));
+        }
+        
+        return response;
+    }
+
+    public List<SubloteDTOResponse> findProximosAVencer(Integer dias) {
+        List<Sublote> sublotes = subloteDAO.findProximosAVencer(dias);
+        List<SubloteDTOResponse> response = new ArrayList<>();
+        
+        for (Sublote sublote : sublotes) {
+            response.add(mapToDTOResponse(sublote));
+        }
+        
+        return response;
+    }
+
     private SubloteDTOResponse mapToDTOResponse(Sublote sublote) {
         return new SubloteDTOResponse(
             sublote.getId(),
