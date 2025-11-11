@@ -44,8 +44,7 @@ public class Compra {
     @Column(name = "fecha")
     private LocalDateTime fecha;
     
-    @OneToOne
-    //(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lote_id")   
     private Lote lote;
 

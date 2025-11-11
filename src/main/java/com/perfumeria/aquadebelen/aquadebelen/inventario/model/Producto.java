@@ -10,7 +10,6 @@ import com.perfumeria.aquadebelen.aquadebelen.compras.model.PrecioHistorico;
 import com.perfumeria.aquadebelen.aquadebelen.reserva.model.DetalleReserva;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -54,7 +53,7 @@ public class Producto {
     @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
     private List<DetalleReserva> detallesReserva;
 
-    @OneToMany(mappedBy = "producto", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
     private List<PrecioHistorico> preciosHistoricos;
 
     @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)

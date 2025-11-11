@@ -23,7 +23,11 @@ public class ComprasDAOImpl implements ComprasDAO{
     @Transactional
     @Override
     public void store(Compra compra) {
-        entityManager.merge(compra);
+        if (compra.getId() == null || entityManager.find(Compra.class, compra.getId()) == null) {
+            entityManager.persist(compra);
+        } else {
+            entityManager.merge(compra);
+        }
         entityManager.flush();
     }
 

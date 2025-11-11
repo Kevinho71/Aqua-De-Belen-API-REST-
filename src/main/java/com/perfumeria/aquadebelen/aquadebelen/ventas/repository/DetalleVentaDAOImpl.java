@@ -19,6 +19,13 @@ public class DetalleVentaDAOImpl implements DetalleVentaDAO {
     }
 
     @Override
+    public Integer nextId() {
+        Integer maxId = entityManager.createQuery("SELECT COALESCE(MAX(dv.id), 0) FROM DetalleVenta dv", Integer.class)
+                .getSingleResult();
+        return maxId + 1;
+    }
+
+    @Override
     public List<DetalleVenta> buscarTransaccionesPorIdTransaccion(Integer id) {
         TypedQuery<DetalleVenta> query = entityManager
                 .createQuery("SELECT d FROM DetalleTransaccion d WHERE d.transaccion.id = :data ", DetalleVenta.class);

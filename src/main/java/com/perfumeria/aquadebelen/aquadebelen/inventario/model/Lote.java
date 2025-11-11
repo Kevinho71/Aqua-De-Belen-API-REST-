@@ -16,18 +16,13 @@ import lombok.*;
 public class Lote {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
     @Column(name = "fecha_ingreso")
     private LocalDateTime fechaIngreso;
-
-    //borrar esta columna
-    @Column(name = "observacion")
-    private String observacion;
     
-    @OneToMany(mappedBy = "lote")
+    @OneToMany(mappedBy = "lote", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sublote> sublotes;
 
     @OneToOne(mappedBy = "lote")

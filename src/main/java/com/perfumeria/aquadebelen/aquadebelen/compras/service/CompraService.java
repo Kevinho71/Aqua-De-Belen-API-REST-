@@ -13,6 +13,7 @@ import com.perfumeria.aquadebelen.aquadebelen.compras.DTO.DetalleCompraDTORespon
 import com.perfumeria.aquadebelen.aquadebelen.compras.model.Compra;
 import com.perfumeria.aquadebelen.aquadebelen.compras.model.DetalleCompra;
 import com.perfumeria.aquadebelen.aquadebelen.compras.repository.ComprasDAO;
+import com.perfumeria.aquadebelen.aquadebelen.compras.repository.DetalleCompraDAO;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProveedorDAO;
@@ -24,14 +25,18 @@ public class CompraService {
     private ComprasDAO cDAO;
     private ProveedorDAO pDAO;
     private ProductoDAO prDAO;
+    private DetalleCompraDAO dcDAO;
     private LoteService lServ;
+    private MovimientoService mServ;
 
-    public CompraService(ComprasDAO cDAO, ProveedorDAO pDAO, ProductoDAO prDAO,
-            LoteService lServ) {
+    public CompraService(ComprasDAO cDAO, ProveedorDAO pDAO, ProductoDAO prDAO, DetalleCompraDAO dcDAO,
+            LoteService lServ, MovimientoService mServ) {
         this.cDAO = cDAO;
         this.pDAO = pDAO;
         this.prDAO = prDAO;
+        this.dcDAO = dcDAO;
         this.lServ = lServ;
+        this.mServ = mServ;
     }
 
     public CompraDTOResponse store(Integer id, CompraDTORequest req) {
@@ -43,10 +48,17 @@ public class CompraService {
             compra.setCostoBruto(calcularCostoBruto(req.detalles()));
             agregarDetalles(req.detalles(), compra);
             compra.setCostoNeto(compra.getCostoBruto() - compra.getDescuentoTotal());
-
-            // crear lote para la compra
-            //lServ.createLote(compra);
+            
+            // Crear lote y sublotes ANTES de guardar la compra
+            compra.setLote(lServ.createLote(compra));
+            
+            // Guardar la compra con todo el grafo de objetos
             cDAO.store(compra);
+            
+            // Crear movimientos para cada detalle de compra
+            for (DetalleCompra detalle : compra.getDetallesCompra()) {
+                mServ.crearMovimientoCompra(detalle);
+            }
         } else {
             compra = cDAO.findById(id);
             compra.setProveedor(pDAO.findById(req.proveedorId()));
@@ -71,8 +83,14 @@ public class CompraService {
     public void agregarDetalles(List<DetalleCompraDTORequest> detalles, Compra compra) {
 
         double descuentoTotal = 0;
-        for (DetalleCompraDTORequest dt : detalles) {
+        // Obtener el próximo ID base una sola vez
+        Integer nextId = dcDAO.nextId();
+        
+        for (int i = 0; i < detalles.size(); i++) {
+            DetalleCompraDTORequest dt = detalles.get(i);
             DetalleCompra detalle = new DetalleCompra();
+            // Incrementar el ID para cada detalle
+            detalle.setId(nextId + i);
             Producto producto = prDAO.findById(dt.productoId());
             detalle.setCantidad(dt.cantidad());
             detalle.setCostoUnitario(dt.costoUnitario());

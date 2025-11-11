@@ -9,14 +9,17 @@ import org.springframework.stereotype.Service;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
 import com.perfumeria.aquadebelen.aquadebelen.compras.model.PrecioHistorico;
 import com.perfumeria.aquadebelen.aquadebelen.compras.repository.PrecioHistoricoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.compras.service.MovimientoService;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.service.SubloteService;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaRequest;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaRequest;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.Venta;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.DetalleVentaDAO;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.MetodoDePagoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.VentaDAO;
 
@@ -27,14 +30,20 @@ public class VentaService {
     private final ClienteDAO cDAO;
     private final ProductoDAO pDAO;
     private final PrecioHistoricoDAO phDAO;
+    private final DetalleVentaDAO dvDAO;
+    private final SubloteService sServ;
+    private final MovimientoService mServ;
 
-    public VentaService(VentaDAO tDAO, MetodoDePagoDAO mpDAO, ClienteDAO cDAO, ProductoDAO pDAO, PrecioHistoricoDAO phDAO) {
+    public VentaService(VentaDAO tDAO, MetodoDePagoDAO mpDAO, ClienteDAO cDAO, ProductoDAO pDAO,
+            PrecioHistoricoDAO phDAO, DetalleVentaDAO dvDAO, SubloteService sServ, MovimientoService mServ) {
         this.tDAO = tDAO;
         this.mpDAO = mpDAO;
         this.cDAO = cDAO;
         this.pDAO = pDAO;
         this.phDAO = phDAO;
-
+        this.dvDAO = dvDAO;
+        this.sServ = sServ;
+        this.mServ = mServ;
     }
 
     public VentaResponse store(Integer id, VentaRequest req) {
@@ -49,6 +58,9 @@ public class VentaService {
             agregarDetalles(req.detalles(), venta);
             venta.setTotalNeto(venta.getTotalBruto() - venta.getDescuentoTotal());
             tDAO.store(venta);
+
+            // Crear movimientos DESPUÉS del persist
+            crearMovimientosVenta(venta);
         } else {
             venta = tDAO.findById(id);
             venta.setCliente(cDAO.findById(req.clienteId()));
@@ -78,19 +90,39 @@ public class VentaService {
 
     public void agregarDetalles(List<DetalleVentaRequest> detalles, Venta venta) {
 
-        double descuentoTotal=0;
-        for (DetalleVentaRequest dt : detalles) {
+        double descuentoTotal = 0;
+        // Obtener el próximo ID base una sola vez
+        Integer nextId = dvDAO.nextId();
+
+        for (int i = 0; i < detalles.size(); i++) {
+            DetalleVentaRequest dt = detalles.get(i);
             DetalleVenta detalle = new DetalleVenta();
+            // Incrementar el ID para cada detalle
+            detalle.setId(nextId + i);
             Producto producto = pDAO.findById(dt.productoId());
+            PrecioHistorico precioHistorico = phDAO.findUltimoPrecioByProductoId(producto.getId());
+
             detalle.setCantidad(dt.cantidad());
             detalle.setProducto(producto);
             detalle.setDescuento(dt.descuento());
-            double subtotal = (phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta() * dt.cantidad())-dt.descuento();
+            double subtotal = (precioHistorico.getPrecioVenta() * dt.cantidad()) - dt.descuento();
             detalle.setSubtotal(subtotal);
-            descuentoTotal=descuentoTotal+dt.descuento();
+            descuentoTotal = descuentoTotal + dt.descuento();
             venta.addDetalle(detalle);
+
+            // Descontar del sublote más próximo a vencer
+            com.perfumeria.aquadebelen.aquadebelen.inventario.model.Sublote sublote = sServ
+                    .buscarProximoAVencer(producto.getId());
+            sServ.descontarCantidad(sublote, dt.cantidad());
         }
         venta.setDescuentoTotal(descuentoTotal);
+    }
+
+    private void crearMovimientosVenta(Venta venta) {
+        for (DetalleVenta detalle : venta.getDetallesVentas()) {
+            PrecioHistorico precioHistorico = phDAO.findUltimoPrecioByProductoId(detalle.getProducto().getId());
+            mServ.crearMovimientoVenta(detalle, precioHistorico.getPrecioVenta());
+        }
     }
 
     public void actualizarDetalles(List<DetalleVentaRequest> detalles, Venta venta) {
@@ -124,7 +156,9 @@ public class VentaService {
         List<DetalleVentaResponse> listResp = new ArrayList<>();
         for (DetalleVenta dt : venta.getDetallesVentas()) {
             DetalleVentaResponse dtr = new DetalleVentaResponse(dt.getVenta().getId(), dt.getId(),
-                    dt.getProducto().getNombre(), phDAO.findUltimoPrecioByProductoId(dt.getProducto().getId()).getPrecioVenta(), dt.getCantidad(), dt.getDescuento(), dt.getSubtotal());
+                    dt.getProducto().getNombre(),
+                    phDAO.findUltimoPrecioByProductoId(dt.getProducto().getId()).getPrecioVenta(), dt.getCantidad(),
+                    dt.getDescuento(), dt.getSubtotal());
             listResp.add(dtr);
         }
         return new VentaResponse(venta.getId(),

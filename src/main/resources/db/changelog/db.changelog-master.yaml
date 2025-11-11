@@ -21,3 +21,7 @@ databaseChangeLog:
       file: db/changelog/10-seed-data-minimal.yaml
   - include:
       file: db/changelog/11-update-proveedor-ubicaciones.yaml
+  - include:
+      file: db/changelog/12-seed-precios-historico.yaml
+  - include:
+      file: db/changelog/13-drop-observacion-lote.yaml
