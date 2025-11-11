@@ -1,5 +1,7 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -30,5 +32,20 @@ public class MovimientoDAOImpl implements MovimientoDAO {
         TypedQuery<Integer> query = entityManager.createQuery(
                 "SELECT COALESCE(MAX(m.id), 0) + 1 FROM Movimiento m", Integer.class);
         return query.getSingleResult();
+    }
+
+    @Override
+    public Movimiento findById(Integer id) {
+        TypedQuery<Movimiento> query = entityManager.createQuery(
+                "SELECT m FROM Movimiento m WHERE m.id = :id", Movimiento.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public List<Movimiento> findAll() {
+        TypedQuery<Movimiento> query = entityManager.createQuery(
+                "SELECT m FROM Movimiento m ORDER BY m.fecha DESC", Movimiento.class);
+        return query.getResultList();
     }
 }

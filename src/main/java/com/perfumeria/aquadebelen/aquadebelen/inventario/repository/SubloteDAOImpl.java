@@ -56,7 +56,8 @@ public class SubloteDAOImpl implements SubloteDAO{
                 Sublote.class);
         query.setParameter("productoId", productoId);
         query.setMaxResults(1);
-        return query.getSingleResult();
+        List<Sublote> resultados = query.getResultList();
+        return resultados.isEmpty() ? null : resultados.get(0);
     }
 
 }

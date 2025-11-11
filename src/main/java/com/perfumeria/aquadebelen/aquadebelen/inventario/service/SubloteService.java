@@ -16,10 +16,18 @@ public class SubloteService {
     }
 
     public Sublote buscarProximoAVencer(Integer productoId) {
-        return sDAO.findProximoAVencerByProductoId(productoId);
+        Sublote sublote = sDAO.findProximoAVencerByProductoId(productoId);
+        if (sublote == null) {
+            throw new RuntimeException("No hay inventario disponible para el producto con ID: " + productoId);
+        }
+        return sublote;
     }
 
     public void descontarCantidad(Sublote sublote, double cantidad) {
+        if (sublote.getCantidadActual() < cantidad) {
+            throw new RuntimeException("Cantidad insuficiente en inventario. Disponible: " 
+                + sublote.getCantidadActual() + ", Solicitado: " + cantidad);
+        }
         double nuevaCantidad = sublote.getCantidadActual() - cantidad;
         sublote.setCantidadActual(nuevaCantidad);
         actualizarEstado(sublote);
