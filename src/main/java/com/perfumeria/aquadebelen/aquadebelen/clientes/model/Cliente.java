@@ -5,7 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.Cascade;
 
 import com.perfumeria.aquadebelen.aquadebelen.reserva.model.Reserva;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.Transaccion;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.model.Venta;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +18,6 @@ import lombok.*;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
@@ -46,7 +45,7 @@ public class Cliente {
     private Ubicacion ubicacion;
 
     @OneToMany(mappedBy = "cliente")
-    private List<Transaccion> transacciones;
+    private List<Venta> ventas;
 
     @OneToMany(mappedBy = "cliente")
     private List<Reserva> reservas;

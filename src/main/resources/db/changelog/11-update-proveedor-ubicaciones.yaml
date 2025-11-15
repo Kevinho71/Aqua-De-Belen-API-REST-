@@ -1,0 +1,96 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-proveedor-ubicaciones-20251029-001
+      author: usuario
+      comment: "Actualizar proveedores existentes con ubicaciones válidas"
+      
+      changes:
+        # Actualizar cada proveedor con una ubicación válida (de las 3 que creamos en el changelog 10)
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1  # Cochabamba - Centro
+            where: "nit = '1023456789'"  # Cosméticos La Belleza
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 2  # Santa Cruz - Equipetrol
+            where: "nit = '2034567890'"  # Distribuidora Aurora
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1  # Cochabamba - Centro
+            where: "nit = '3045678901'"  # Perfumería Internacional
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 3  # La Paz - Sopocachi
+            where: "nit = '4056789012'"  # Laboratorios Naturales
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1  # Cochabamba - Centro
+            where: "nit = '5067890123'"  # Distribuciones Premium
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 2  # Santa Cruz - Equipetrol
+            where: "nit = '6078901234'"  # Importadora Andina
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1  # Cochabamba - Centro
+            where: "nit = '7089012345'"  # Cosméticos del Sur
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 2  # Santa Cruz - Equipetrol
+            where: "nit = '8090123456'"  # Global Beauty Supply
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 3  # La Paz - Sopocachi
+            where: "nit = '9001234567'"  # Fragancias Exclusivas
+        
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1  # Cochabamba - Centro
+            where: "nit = '1012345678'"  # Casa de Belleza Nacional
+
+      rollback:
+        - update:
+            tableName: proveedor
+            columns:
+              - column:
+                  name: ubicacion_id
+                  value: null
+            where: "nit IN ('1023456789', '2034567890', '3045678901', '4056789012', '5067890123', '6078901234', '7089012345', '8090123456', '9001234567', '1012345678')"

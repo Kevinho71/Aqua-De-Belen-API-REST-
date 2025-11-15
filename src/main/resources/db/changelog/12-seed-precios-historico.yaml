@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-precios-historico-20251030-001
+      author: usuario
+      comment: "Agregar precios históricos para productos existentes"
+      
+      changes:
+        # ========================================
+        # PRECIOS HISTÓRICOS - 4 productos
+        # ========================================
+        
+        # Producto 1: Chanel No. 5 (Perfume)
+        - insert:
+            tableName: precios_historico
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: precio_venta
+                  valueNumeric: 850.00
+              - column:
+                  name: fecha
+                  valueDate: 2025-01-15T10:00:00
+              - column:
+                  name: producto_id
+                  valueNumeric: 1
+        
+        # Producto 2: Dior Sauvage (Perfume)
+        - insert:
+            tableName: precios_historico
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: precio_venta
+                  valueNumeric: 780.00
+              - column:
+                  name: fecha
+                  valueDate: 2025-01-15T10:00:00
+              - column:
+                  name: producto_id
+                  valueNumeric: 2
+        
+        # Producto 3: Crema Nivea Nutritiva (Crema Facial)
+        - insert:
+            tableName: precios_historico
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: precio_venta
+                  valueNumeric: 45.50
+              - column:
+                  name: fecha
+                  valueDate: 2025-01-15T10:00:00
+              - column:
+                  name: producto_id
+                  valueNumeric: 3
+        
+        # Producto 4: Pantene Pro-V (Shampoo)
+        - insert:
+            tableName: precios_historico
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 4
+              - column:
+                  name: precio_venta
+                  valueNumeric: 32.00
+              - column:
+                  name: fecha
+                  valueDate: 2025-01-15T10:00:00
+              - column:
+                  name: producto_id
+                  valueNumeric: 4
+
+      rollback:
+        - sql:
+            sql: "DELETE FROM precios_historico WHERE id IN (1, 2, 3, 4);"
+            comment: "Rollback: Eliminar precios históricos de productos"

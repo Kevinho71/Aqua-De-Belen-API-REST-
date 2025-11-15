@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 15-invertir-relacion-sublote-detalle
+      author: sistema
+      changes:
+        # Eliminar la columna sublote_id de detalle_compra
+        - dropColumn:
+            tableName: detalle_compra
+            columnName: sublote_id
+        
+        # Agregar la columna detalle_compra_id a sublote
+        - addColumn:
+            tableName: sublote
+            columns:
+              - column:
+                  name: detalle_compra_id
+                  type: INT
+                  constraints:
+                    nullable: true
+        
+        # Agregar foreign key constraint
+        - addForeignKeyConstraint:
+            baseTableName: sublote
+            baseColumnNames: detalle_compra_id
+            constraintName: fk_sublote_detalle_compra
+            referencedTableName: detalle_compra
+            referencedColumnNames: id
+            onDelete: SET NULL

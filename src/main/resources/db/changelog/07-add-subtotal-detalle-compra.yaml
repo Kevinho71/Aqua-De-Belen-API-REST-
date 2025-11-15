@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-subtotal-column-to-detalle-compra-20251018-001
+      author: usuario
+      comment: "Agregar columna subtotal a la tabla detalle_compra para almacenar el cálculo de (precio * cantidad) - descuento de cada detalle"
+      changes:
+        - addColumn:
+            tableName: detalle_compra
+            columns:
+              - column:
+                  name: subtotal
+                  type: FLOAT8
+                  constraints:
+                    nullable: false
+                  defaultValueNumeric: 0.0
+                  remarks: "Subtotal calculado del detalle de compra (precio * cantidad - descuento)"
+                  
+      rollback:
+        - dropColumn:
+            tableName: detalle_compra
+            columnName: subtotal

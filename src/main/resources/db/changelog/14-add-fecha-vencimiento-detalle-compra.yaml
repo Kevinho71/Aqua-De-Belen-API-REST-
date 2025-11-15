@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 14-add-fecha-vencimiento-detalle-compra
+      author: sistema
+      changes:
+        - addColumn:
+            tableName: detalle_compra
+            columns:
+              - column:
+                  name: fecha_vencimiento
+                  type: DATE
+                  constraints:
+                    nullable: true

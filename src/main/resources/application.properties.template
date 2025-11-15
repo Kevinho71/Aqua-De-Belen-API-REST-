@@ -1,0 +1,46 @@
+# Spring Boot Application Configuration Template
+# Copy this file to application.properties and replace placeholders with actual values
+# DO NOT commit application.properties to version control
+
+# Database Configuration - PostgreSQL/Supabase
+# Replace with your actual database credentials
+spring.datasource.url=jdbc:postgresql://YOUR_HOST:5432/YOUR_DATABASE?user=YOUR_USER&password=YOUR_PASSWORD
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA/Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.generate-ddl=false
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+
+# Liquibase Configuration
+spring.liquibase.enabled=false
+spring.liquibase.change-log=classpath:db/changelog/db.changelog-master.yaml
+spring.liquibase.default-schema=public
+
+# Server Configuration
+server.port=8080
+server.servlet.context-path=/
+
+# Logging Configuration
+logging.level.com.perfumeria.aquadebelen=INFO
+logging.level.org.springframework.web=DEBUG
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+
+# Development Profile Settings
+# Uncomment for development
+# spring.profiles.active=dev
+# spring.devtools.restart.enabled=true
+
+# Security Configuration (if using Spring Security)
+# spring.security.user.name=admin
+# spring.security.user.password=YOUR_ADMIN_PASSWORD
+
+# Application Specific Configuration
+# Add your custom properties here
+# app.name=Aqua de Belen
+# app.version=1.0.0

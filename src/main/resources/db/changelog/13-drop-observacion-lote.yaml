@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop-observacion-column-from-lote-20251031-001
+      author: usuario
+      comment: "Eliminar columna observacion de la tabla lote"
+      
+      changes:
+        - dropColumn:
+            tableName: lote
+            columnName: observacion
+      
+      rollback:
+        - addColumn:
+            tableName: lote
+            columns:
+              - column:
+                  name: observacion
+                  type: VARCHAR(255)

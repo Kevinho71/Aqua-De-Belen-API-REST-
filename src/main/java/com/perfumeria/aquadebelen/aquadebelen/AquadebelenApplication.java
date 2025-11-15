@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Bean;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.NivelFidelidadDAO;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.UbicacionDAO;
-import com.perfumeria.aquadebelen.aquadebelen.productos.repository.ProductoDAO;
-import com.perfumeria.aquadebelen.aquadebelen.productos.repository.TipoProductoDAO;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.model.Transaccion;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.repository.MetodoDePagoDAO;
-import com.perfumeria.aquadebelen.aquadebelen.transaccion.repository.TransaccionDAO;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.TipoProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.model.Venta;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.MetodoDePagoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.VentaDAO;
 
 @SpringBootApplication
 public class AquadebelenApplication {
@@ -25,7 +25,7 @@ public class AquadebelenApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(TransaccionDAO transaccionDAO, ProductoDAO productoDAO, TipoProductoDAO tipoProductoDAO, ClienteDAO clienteDAO, NivelFidelidadDAO nivelFidelidadDAO, UbicacionDAO ubicacionDAO, MetodoDePagoDAO metodoDePagoDAO){
+	public CommandLineRunner commandLineRunner(VentaDAO transaccionDAO, ProductoDAO productoDAO, TipoProductoDAO tipoProductoDAO, ClienteDAO clienteDAO, NivelFidelidadDAO nivelFidelidadDAO, UbicacionDAO ubicacionDAO, MetodoDePagoDAO metodoDePagoDAO){
 		return runner -> {
 			
 

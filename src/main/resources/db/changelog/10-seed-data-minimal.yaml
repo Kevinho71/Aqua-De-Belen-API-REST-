@@ -1,0 +1,346 @@
+databaseChangeLog:
+  - changeSet:
+      id: seed-data-minimal-20251029-001
+      author: usuario
+      comment: "Datos semilla mínimos para pruebas - Tablas principales"
+      
+      changes:
+        # ========================================
+        # 1. UBICACIONES (3 registros)
+        # ========================================
+        - insert:
+            tableName: ubicacion
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: ciudad
+                  value: "Cochabamba"
+              - column:
+                  name: zona
+                  value: "Centro"
+        
+        - insert:
+            tableName: ubicacion
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: ciudad
+                  value: "Santa Cruz"
+              - column:
+                  name: zona
+                  value: "Equipetrol"
+        
+        - insert:
+            tableName: ubicacion
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: ciudad
+                  value: "La Paz"
+              - column:
+                  name: zona
+                  value: "Sopocachi"
+
+        # ========================================
+        # 2. NIVELES DE FIDELIDAD (3 registros)
+        # ========================================
+        - insert:
+            tableName: nivel_fidelidad
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: nivel
+                  value: "Bronce"
+        
+        - insert:
+            tableName: nivel_fidelidad
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: nivel
+                  value: "Plata"
+        
+        - insert:
+            tableName: nivel_fidelidad
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: nivel
+                  value: "Oro"
+
+        # ========================================
+        # 3. CLIENTES (3 registros)
+        # ========================================
+        - insert:
+            tableName: cliente
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: nombre
+                  value: "Juan"
+              - column:
+                  name: apellido
+                  value: "Pérez García"
+              - column:
+                  name: nit_ci
+                  value: "9876543"
+              - column:
+                  name: telefono
+                  value: "70123456"
+              - column:
+                  name: direccion
+                  value: "Av. Heroínas #123"
+              - column:
+                  name: nivel_fidelidad_id
+                  valueNumeric: 1
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1
+        
+        - insert:
+            tableName: cliente
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: nombre
+                  value: "María"
+              - column:
+                  name: apellido
+                  value: "López Ramos"
+              - column:
+                  name: nit_ci
+                  value: "8765432"
+              - column:
+                  name: telefono
+                  value: "71234567"
+              - column:
+                  name: direccion
+                  value: "Calle España #456"
+              - column:
+                  name: nivel_fidelidad_id
+                  valueNumeric: 2
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 1
+        
+        - insert:
+            tableName: cliente
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: nombre
+                  value: "Carlos"
+              - column:
+                  name: apellido
+                  value: "Mendoza Silva"
+              - column:
+                  name: nit_ci
+                  value: "7654321"
+              - column:
+                  name: telefono
+                  value: "72345678"
+              - column:
+                  name: direccion
+                  value: "Av. Blanco Galindo Km 4"
+              - column:
+                  name: nivel_fidelidad_id
+                  valueNumeric: 3
+              - column:
+                  name: ubicacion_id
+                  valueNumeric: 2
+
+        # ========================================
+        # 4. TIPOS DE PRODUCTO (3 registros)
+        # ========================================
+        - insert:
+            tableName: tipo_producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: nombre
+                  value: "Perfume"
+        
+        - insert:
+            tableName: tipo_producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: nombre
+                  value: "Crema Facial"
+        
+        - insert:
+            tableName: tipo_producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: nombre
+                  value: "Shampoo"
+
+        # ========================================
+        # 5. PRODUCTOS (4 registros)
+        # ========================================
+        - insert:
+            tableName: producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: nombre
+                  value: "Chanel No. 5"
+              - column:
+                  name: descripcion
+                  value: "Perfume clásico de mujer 100ml"
+              - column:
+                  name: tipo_producto_id
+                  valueNumeric: 1
+        
+        - insert:
+            tableName: producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: nombre
+                  value: "Dior Sauvage"
+              - column:
+                  name: descripcion
+                  value: "Perfume de hombre 100ml"
+              - column:
+                  name: tipo_producto_id
+                  valueNumeric: 1
+        
+        - insert:
+            tableName: producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: nombre
+                  value: "Crema Nivea Nutritiva"
+              - column:
+                  name: descripcion
+                  value: "Crema hidratante facial 50ml"
+              - column:
+                  name: tipo_producto_id
+                  valueNumeric: 2
+        
+        - insert:
+            tableName: producto
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 4
+              - column:
+                  name: nombre
+                  value: "Pantene Pro-V"
+              - column:
+                  name: descripcion
+                  value: "Shampoo reparación total 400ml"
+              - column:
+                  name: tipo_producto_id
+                  valueNumeric: 3
+
+        # ========================================
+        # 6. MÉTODOS DE PAGO (3 registros)
+        # ========================================
+        - insert:
+            tableName: metodo_de_pago
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: metodo
+                  value: "Efectivo"
+        
+        - insert:
+            tableName: metodo_de_pago
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: metodo
+                  value: "Tarjeta de Crédito"
+        
+        - insert:
+            tableName: metodo_de_pago
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: metodo
+                  value: "Transferencia Bancaria"
+
+        # ========================================
+        # 7. ESTADOS DE RESERVA (3 registros)
+        # ========================================
+        - insert:
+            tableName: estado_reserva
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: nombre
+                  value: "Pendiente"
+        
+        - insert:
+            tableName: estado_reserva
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: nombre
+                  value: "Confirmada"
+        
+        - insert:
+            tableName: estado_reserva
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 3
+              - column:
+                  name: nombre
+                  value: "Cancelada"
+
+      rollback:
+        - sql:
+            sql: |
+              DELETE FROM estado_reserva WHERE id IN (1, 2, 3);
+              DELETE FROM metodo_de_pago WHERE id IN (1, 2, 3);
+              DELETE FROM producto WHERE id IN (1, 2, 3, 4);
+              DELETE FROM tipo_producto WHERE id IN (1, 2, 3);
+              DELETE FROM cliente WHERE id IN (1, 2, 3);
+              DELETE FROM nivel_fidelidad WHERE id IN (1, 2, 3);
+              DELETE FROM ubicacion WHERE id IN (1, 2, 3);
+            comment: "Rollback: Eliminar todos los datos semilla mínimos"

@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-cantidad-column-to-detalle-compra-20251018-001
+      author: usuario
+      comment: "Agregar columna cantidad a la tabla detalle_compra para registrar la cantidad de productos comprados en cada detalle"
+      changes:
+        - addColumn:
+            tableName: detalle_compra
+            columns:
+              - column:
+                  name: cantidad
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+                  defaultValueNumeric: 1
+                  remarks: "Cantidad de unidades del producto en el detalle de compra"
+                  
+      rollback:
+        - dropColumn:
+            tableName: detalle_compra
+            columnName: cantidad
