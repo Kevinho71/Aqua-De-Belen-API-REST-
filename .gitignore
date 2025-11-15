@@ -34,12 +34,11 @@ build/
 
 ### Configuration files with sensitive data ###
 src/main/resources/application.properties
-src/main/resources/application-*.properties
 src/main/resources/db/liquibase.properties
 liquibase*.properties
 *.local.properties
 
 # Environment specific configurations
 application-dev.properties
-application-prod.properties
 application-staging.properties
+# Note: application-prod.properties is tracked but uses environment variables
