@@ -69,5 +69,30 @@ public class ProductoDAOImpl implements ProductoDAO{
         return query.getResultList();
     }
 
+    @Transactional
+    @Override
+    public void delete(Producto producto) {
+        if (entityManager.contains(producto)) {
+            entityManager.remove(producto);
+        } else {
+            entityManager.remove(entityManager.merge(producto));
+        }
+    }
+
+    @Override
+    public Long count() {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(p) FROM Producto p", Long.class);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        TypedQuery<Long> query = entityManager.createQuery(
+                "SELECT COUNT(p) FROM Producto p WHERE p.id = :id", Long.class);
+        query.setParameter("id", id);
+        return query.getSingleResult() > 0;
+    }
+
 
 }

@@ -1,7 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.presenter;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +22,7 @@ public class CompraPresenter {
         compraViewModel.setDescuentoTotal(String.valueOf(compraDTOResponse.descuentoTotal())+ " Bs");
 
         compraViewModel.setProveedor(compraDTOResponse.proveedor());
-        compraViewModel.setFecha(formatFecha(compraDTOResponse.fecha()));
+        compraViewModel.setFecha(compraDTOResponse.fecha());
         compraViewModel.setDetalles(presentDetalles(compraDTOResponse.detalles()));
 
         return compraViewModel;
@@ -59,18 +57,10 @@ public class CompraPresenter {
             lcv.setCostoBruto(String.valueOf(cdr.costoBruto())+" Bs");
             lcv.setCostoNeto(String.valueOf(cdr.costoNeto())+" Bs");
             lcv.setDescuentoTotal(String.valueOf(cdr.descuentoTotal())+" Bs");
-            lcv.setFecha(formatFecha(cdr.fecha()));
+            lcv.setFecha(cdr.fecha());
             lista.add(lcv);
         }
         return lista;
     }
-
-    public String formatFecha(LocalDateTime fecha) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedFecha = fecha.format(formatter);
-
-        return formattedFecha;
-    }
-
 
 }

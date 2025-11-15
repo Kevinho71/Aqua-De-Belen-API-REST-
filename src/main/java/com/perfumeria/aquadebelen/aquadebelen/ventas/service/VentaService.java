@@ -1,6 +1,7 @@
 package com.perfumeria.aquadebelen.aquadebelen.ventas.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.VentaDAO;
 
 @Service
 public class VentaService {
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final VentaDAO tDAO;
     private final MetodoDePagoDAO mpDAO;
     private final ClienteDAO cDAO;
@@ -164,7 +166,7 @@ public class VentaService {
         return new VentaResponse(venta.getId(),
                 venta.getCliente().getNombre() + " " + venta.getCliente().getApellido(),
                 venta.getTotalBruto(), venta.getDescuentoTotal(), venta.getTotalNeto(),
-                venta.isConFactura(), venta.getFecha(), listResp);
+                venta.isConFactura(), venta.getFecha().format(FORMATTER), listResp);
     }
 
 }

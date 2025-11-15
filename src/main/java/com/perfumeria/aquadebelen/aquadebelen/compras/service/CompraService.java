@@ -1,6 +1,7 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import com.perfumeria.aquadebelen.aquadebelen.inventario.service.LoteService;
 @Service
 public class CompraService {
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private ComprasDAO cDAO;
     private ProveedorDAO pDAO;
     private ProductoDAO prDAO;
@@ -141,7 +143,7 @@ public class CompraService {
         }
         return new CompraDTOResponse(compra.getId(),
                 compra.getCostoBruto(), compra.getCostoNeto(), compra.getDescuentoTotal(),
-                compra.getProveedor().getNombre(), compra.getFecha(), listResp);
+                compra.getProveedor().getNombre(), compra.getFecha().format(FORMATTER), listResp);
     }
 
 }

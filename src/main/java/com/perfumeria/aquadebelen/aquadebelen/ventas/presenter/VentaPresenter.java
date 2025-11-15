@@ -1,7 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.ventas.presenter;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class VentaPresenter {
         tvm.setdescuentoTotal(String.valueOf(resp.descuentoTotal()) + " Bs");
 
         tvm.setConFactura(formatFactura(resp.conFactura()));
-        tvm.setFecha(formatFecha(resp.fecha()));
+        tvm.setFecha(resp.fecha());
         tvm.setDetalles(presentDetalles(resp.detalles()));
 
         return tvm;
@@ -64,18 +62,11 @@ public class VentaPresenter {
             listPres.setCliente(resp.cliente());
             listPres.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
             listPres.setConFactura(formatFactura(resp.conFactura()));
-            listPres.setFecha(formatFecha(resp.fecha()));
+            listPres.setFecha(resp.fecha());
             lista.add(listPres);
 
         }
         return lista;
-    }
-
-    public String formatFecha(LocalDateTime fecha) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedFecha = fecha.format(formatter);
-
-        return formattedFecha;
     }
 
     public String formatFactura(Boolean factura) {

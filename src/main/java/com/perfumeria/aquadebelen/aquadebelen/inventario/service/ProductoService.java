@@ -56,11 +56,18 @@ public class ProductoService {
 
     public void agregarPrecioHistorico(Producto producto, double precio){
         PrecioHistorico ph = new PrecioHistorico();
+        ph.setId(phDAO.nextId());
         ph.setProducto(producto);
         ph.setPrecioVenta(precio);
         ph.setFecha(LocalDateTime.now());
         producto.addPrecioHistorico(ph);
         phDAO.save(ph);
+    }
+
+    public ProductoDTOResponse actualizarPrecio(Integer productoId, double nuevoPrecio) {
+        Producto producto = pDAO.findById(productoId);
+        agregarPrecioHistorico(producto, nuevoPrecio);
+        return mapToDtoResponse(producto);
     }
 
     // BUSCAR UN PRODUCTO
@@ -93,5 +100,18 @@ public class ProductoService {
         return new ProductoDTOResponse(producto.getId(),
                 phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta(), producto.getDescripcion(),
                 producto.getNombre(), producto.getTipoProducto().getNombre());
+    }
+
+    public void eliminar(Integer id) {
+        Producto producto = pDAO.findById(id);
+        pDAO.delete(producto);
+    }
+
+    public Long contarProductos() {
+        return pDAO.count();
+    }
+
+    public boolean existeProducto(Integer id) {
+        return pDAO.existsById(id);
     }
 }

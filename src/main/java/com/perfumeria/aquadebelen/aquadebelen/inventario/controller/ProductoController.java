@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ActualizarPrecioRequest;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTORequest;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTOResponse;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.presenter.ProductoPresenter;
@@ -105,6 +108,58 @@ public class ProductoController {
         List<ProductoDTOResponse> resp = productoService.buscarPorFiltros(nombre, tipoProductoId);
         List<ListProductoViewModel> ltvm = productoPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
+    }
+
+    @Operation(
+        summary = "Actualizar precio de producto",
+        description = "Actualiza únicamente el precio de venta de un producto. Crea un nuevo registro en el historial de precios."
+    )
+    @ApiResponse(responseCode = "200", description = "Precio actualizado exitosamente")
+    @PatchMapping("/productos/{id}/precio")
+    public ResponseEntity<ProductoViewModel> actualizarPrecio(
+        @Parameter(description = "ID del producto", required = true)
+        @PathVariable("id") @Min(1) Integer id,
+        @Valid @RequestBody ActualizarPrecioRequest req) {
+        ProductoDTOResponse resp = productoService.actualizarPrecio(id, req.precioVenta());
+        ProductoViewModel pvm = productoPresenter.present(resp);
+        return ResponseEntity.ok(pvm);
+    }
+
+    @Operation(
+        summary = "Eliminar producto",
+        description = "Elimina un producto del inventario por su ID"
+    )
+    @ApiResponse(responseCode = "200", description = "Producto eliminado exitosamente")
+    @DeleteMapping("/productos/{id}")
+    public ResponseEntity<Void> eliminar(
+        @Parameter(description = "ID del producto a eliminar", required = true)
+        @PathVariable("id") @Min(1) Integer id) {
+        productoService.eliminar(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(
+        summary = "Contar productos",
+        description = "Obtiene el número total de productos registrados en el inventario"
+    )
+    @ApiResponse(responseCode = "200", description = "Cantidad de productos obtenida")
+    @GetMapping("/productos/count")
+    public ResponseEntity<Long> contarProductos() {
+        Long count = productoService.contarProductos();
+        return ResponseEntity.ok(count);
+    }
+
+    @Operation(
+        summary = "Verificar existencia de producto",
+        description = "Verifica si existe un producto con el ID especificado"
+    )
+    @ApiResponse(responseCode = "200", description = "true si existe, false si no existe")
+    @GetMapping("/productos/{id}/exists")
+    public ResponseEntity<Boolean> existeProducto(
+        @Parameter(description = "ID del producto a verificar", required = true)
+        @PathVariable("id") @Min(1) Integer id) {
+        boolean existe = productoService.existeProducto(id);
+        return ResponseEntity.ok(existe);
     }
 
 

@@ -1,6 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.DTO;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record CompraDTOResponse(
@@ -11,7 +10,7 @@ public record CompraDTOResponse(
     double descuentoTotal,  
    // Integer loteId,
     String proveedor,
-    LocalDateTime fecha,
+    String fecha,
     List<DetalleCompraDTOResponse> detalles
 
 ) {
