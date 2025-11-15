@@ -21,6 +21,7 @@ import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTOResponse
 import com.perfumeria.aquadebelen.aquadebelen.inventario.presenter.ProductoPresenter;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.service.ProductoService;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ListProductoViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ProductoStockTotalViewModel;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ProductoViewModel;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -160,6 +161,30 @@ public class ProductoController {
         @PathVariable("id") @Min(1) Integer id) {
         boolean existe = productoService.existeProducto(id);
         return ResponseEntity.ok(existe);
+    }
+
+    @Operation(
+        summary = "Listar stock total por producto",
+        description = "Devuelve la lista de productos con la cantidad total disponible sumando todos sus sublotes"
+    )
+    @ApiResponse(responseCode = "200", description = "Stock total obtenido")
+    @GetMapping("/productos/stock-total")
+    public ResponseEntity<List<ProductoStockTotalViewModel>> obtenerStockTotalProductos() {
+        List<ProductoStockTotalViewModel> stockTotal = productoService.obtenerStockTotalProductos();
+        return ResponseEntity.ok(stockTotal);
+    }
+
+    @Operation(
+        summary = "Obtener stock total de un producto",
+        description = "Devuelve la cantidad total disponible de un producto específico sumando todos sus sublotes"
+    )
+    @ApiResponse(responseCode = "200", description = "Stock total del producto obtenido")
+    @GetMapping("/productos/{id}/stock-total")
+    public ResponseEntity<ProductoStockTotalViewModel> obtenerStockTotalProducto(
+        @Parameter(description = "ID del producto a consultar", required = true)
+        @PathVariable("id") @Min(1) Integer id) {
+        ProductoStockTotalViewModel stock = productoService.obtenerStockTotalProducto(id);
+        return ResponseEntity.ok(stock);
     }
 
 

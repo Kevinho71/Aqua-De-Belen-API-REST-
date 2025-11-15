@@ -84,4 +84,22 @@ public class SubloteDAOImpl implements SubloteDAO{
         return query.getResultList();
     }
 
+    @Override
+    public Double sumCantidadActualByProductoId(Integer productoId) {
+        TypedQuery<Double> query = entityManager.createQuery(
+                "SELECT COALESCE(SUM(s.cantidadActual), 0) FROM Sublote s WHERE s.producto.id = :productoId",
+                Double.class);
+        query.setParameter("productoId", productoId);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public List<Object[]> sumCantidadActualGroupByProducto() {
+        TypedQuery<Object[]> query = entityManager.createQuery(
+            "SELECT s.producto.id, COALESCE(SUM(s.cantidadActual), 0) "
+                + "FROM Sublote s WHERE s.producto IS NOT NULL GROUP BY s.producto.id",
+                Object[].class);
+        return query.getResultList();
+    }
+
 }

@@ -19,4 +19,8 @@ public interface SubloteDAO {
     List<Sublote> findDisponibles();
     
     List<Sublote> findProximosAVencer(Integer dias);
+
+    Double sumCantidadActualByProductoId(Integer productoId);
+
+    List<Object[]> sumCantidadActualGroupByProducto();
 }

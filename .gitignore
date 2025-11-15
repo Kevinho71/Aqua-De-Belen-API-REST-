@@ -42,3 +42,6 @@ liquibase*.properties
 application-dev.properties
 application-staging.properties
 # Note: application-prod.properties is tracked but uses environment variables
+
+# Frontend assets under development
+src/main/resources/static/

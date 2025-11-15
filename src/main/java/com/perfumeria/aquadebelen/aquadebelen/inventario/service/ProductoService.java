@@ -2,7 +2,9 @@ package com.perfumeria.aquadebelen.aquadebelen.inventario.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTOResponse
 import com.perfumeria.aquadebelen.aquadebelen.inventario.model.Producto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.TipoProductoDAO;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.SubloteDAO;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ProductoStockTotalViewModel;
 
 
 @Service
@@ -21,11 +25,13 @@ public class ProductoService {
     private final ProductoDAO pDAO;
     private final TipoProductoDAO tpDAO;
     private final PrecioHistoricoDAO phDAO;
+    private final SubloteDAO subloteDAO;
 
-    public ProductoService(ProductoDAO pDAO, TipoProductoDAO tpDAO, PrecioHistoricoDAO phDAO) {
+    public ProductoService(ProductoDAO pDAO, TipoProductoDAO tpDAO, PrecioHistoricoDAO phDAO, SubloteDAO subloteDAO) {
         this.pDAO = pDAO;
         this.tpDAO = tpDAO;
         this.phDAO = phDAO;
+        this.subloteDAO = subloteDAO;
     }
 
 
@@ -113,5 +119,33 @@ public class ProductoService {
 
     public boolean existeProducto(Integer id) {
         return pDAO.existsById(id);
+    }
+
+    public List<ProductoStockTotalViewModel> obtenerStockTotalProductos() {
+        Map<Integer, Double> stockPorProducto = new HashMap<>();
+        List<Object[]> resultados = subloteDAO.sumCantidadActualGroupByProducto();
+        for (Object[] fila : resultados) {
+            if (fila == null || fila.length < 2 || fila[0] == null) {
+                continue;
+            }
+            Integer productoId = ((Number) fila[0]).intValue();
+            Double cantidad = fila[1] != null ? ((Number) fila[1]).doubleValue() : 0d;
+            stockPorProducto.put(productoId, cantidad);
+        }
+
+        List<Producto> productos = pDAO.list();
+        List<ProductoStockTotalViewModel> respuesta = new ArrayList<>();
+        for (Producto producto : productos) {
+            double total = stockPorProducto.getOrDefault(producto.getId(), 0d);
+            respuesta.add(new ProductoStockTotalViewModel(producto.getId(), producto.getNombre(), total));
+        }
+        return respuesta;
+    }
+
+    public ProductoStockTotalViewModel obtenerStockTotalProducto(Integer id) {
+        Producto producto = pDAO.findById(id);
+        Double cantidad = subloteDAO.sumCantidadActualByProductoId(id);
+        double total = cantidad != null ? cantidad : 0d;
+        return new ProductoStockTotalViewModel(producto.getId(), producto.getNombre(), total);
     }
 }
