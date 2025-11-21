@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.MetodoDePagoResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaRequest;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.presenter.VentaPresenter;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.service.VentaService;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.ListVentaViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.MetodoDePagoViewModel;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.VentaViewModel;
 
 import jakarta.validation.Valid;
@@ -62,6 +64,13 @@ public class VentasController {
         List<VentaResponse> resp = VentaService.listar();
         List<ListVentaViewModel> ltvm = VentaPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
+    }
+
+    @GetMapping("/ventas/metodos-pago")
+    public ResponseEntity<List<MetodoDePagoViewModel>> listarMetodosPago() {
+        List<MetodoDePagoResponse> resp = VentaService.listarMetodosDePago();
+        List<MetodoDePagoViewModel> viewModels = VentaPresenter.presentMetodosPago(resp);
+        return ResponseEntity.ok(viewModels);
     }
 
     @GetMapping("/ventas/{id}")

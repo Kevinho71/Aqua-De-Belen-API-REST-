@@ -46,7 +46,7 @@ public class ProveedorDAOImpl implements ProveedorDAO {
 
     @Override
     public Integer nextId() {
-        TypedQuery<Integer> query = entityManager.createQuery("SELECT COALESCE(MAX(p.id), 0) FROM Producto p ",
+        TypedQuery<Integer> query = entityManager.createQuery("SELECT COALESCE(MAX(p.id), 0) FROM Proveedor p",
                 Integer.class);
         return query.getSingleResult() + 1;
     }

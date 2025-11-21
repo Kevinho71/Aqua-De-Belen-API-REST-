@@ -6,7 +6,8 @@ public record ProductoDTOResponse (
     Double precio,
     String descripcion,
     String nombre,
-    String tipoProducto
+    String tipoProducto,
+    Integer tipoProductoId
 ){
 
 }

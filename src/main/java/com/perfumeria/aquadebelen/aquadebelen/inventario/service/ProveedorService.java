@@ -30,6 +30,7 @@ public class ProveedorService {
             proveedor.setId(pDAO.nextId());
             proveedor.setNombre(req.nombre());
             proveedor.setCorreo(req.correo());
+            proveedor.setTelefono(req.telefono());
             proveedor.setNit(req.nit());
             proveedor.setUbicacion(uDAO.findById(req.ubicacionId()));
             pDAO.store(proveedor);
@@ -37,6 +38,7 @@ public class ProveedorService {
             proveedor = pDAO.findById(id);
             proveedor.setNombre(req.nombre());
             proveedor.setCorreo(req.correo());
+            proveedor.setTelefono(req.telefono());
             proveedor.setNit(req.nit());
             proveedor.setUbicacion(uDAO.findById(req.ubicacionId()));
             pDAO.store(proveedor);
@@ -60,10 +62,32 @@ public class ProveedorService {
         return listaResp;
     }
 
-    public ProveedorDTOResponse mapToDtoResponse(Proveedor proveedor) {
+    public void borrar(Integer id) {
+        pDAO.deleteById(id);
+    }
 
-        return new ProveedorDTOResponse(proveedor.getId(),
-                proveedor.getNombre(), proveedor.getCorreo(),
-                proveedor.getTelefono(), proveedor.getNit(), proveedor.getUbicacion().getCiudad());
+    public ProveedorDTOResponse mapToDtoResponse(Proveedor proveedor) {
+        if (proveedor == null) {
+            return null;
+        }
+
+        Integer ubicacionId = null;
+        String ciudad = null;
+        String zona = null;
+        if (proveedor.getUbicacion() != null) {
+            ubicacionId = proveedor.getUbicacion().getId();
+            ciudad = proveedor.getUbicacion().getCiudad();
+            zona = proveedor.getUbicacion().getZona();
+        }
+
+        return new ProveedorDTOResponse(
+                proveedor.getId(),
+                proveedor.getNombre(),
+                proveedor.getCorreo(),
+                proveedor.getTelefono(),
+                proveedor.getNit(),
+                ubicacionId,
+                ciudad,
+                zona);
     }
 }

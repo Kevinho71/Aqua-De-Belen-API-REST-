@@ -7,8 +7,8 @@ public record CompraDTOResponse(
     Integer id,
     double costoBruto,
     double costoNeto,
-    double descuentoTotal,  
-   // Integer loteId,
+    double descuentoTotal,
+    Integer loteId,
     String proveedor,
     String fecha,
     List<DetalleCompraDTOResponse> detalles

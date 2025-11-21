@@ -141,9 +141,10 @@ public class CompraService {
                     dt.getSubtotal());
             listResp.add(dtr);
         }
+        Integer loteId = compra.getLote() != null ? compra.getLote().getId() : null;
         return new CompraDTOResponse(compra.getId(),
-                compra.getCostoBruto(), compra.getCostoNeto(), compra.getDescuentoTotal(),
-                compra.getProveedor().getNombre(), compra.getFecha().format(FORMATTER), listResp);
+            compra.getCostoBruto(), compra.getCostoNeto(), compra.getDescuentoTotal(), loteId,
+            compra.getProveedor().getNombre(), compra.getFecha().format(FORMATTER), listResp);
     }
 
 }

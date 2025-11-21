@@ -8,6 +8,8 @@ public record ClienteDTOResponse(
     String nitCi,
     String direccion,
     String nivelFidelidad,
-    String ubicacion
+    Integer nivelFidelidadId,
+    String ubicacion,
+    Integer ubicacionId
 ) {
 }

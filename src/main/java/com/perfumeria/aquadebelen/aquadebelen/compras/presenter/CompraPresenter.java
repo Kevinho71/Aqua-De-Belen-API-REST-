@@ -23,6 +23,7 @@ public class CompraPresenter {
 
         compraViewModel.setProveedor(compraDTOResponse.proveedor());
         compraViewModel.setFecha(compraDTOResponse.fecha());
+        compraViewModel.setLoteId(compraDTOResponse.loteId());
         compraViewModel.setDetalles(presentDetalles(compraDTOResponse.detalles()));
 
         return compraViewModel;
@@ -31,8 +32,8 @@ public class CompraPresenter {
     public List<DetalleCompraViewModel> presentDetalles(List<DetalleCompraDTOResponse> listResp){
 
         List<DetalleCompraViewModel> lista = new ArrayList<>();
-        DetalleCompraViewModel dcv = new DetalleCompraViewModel();
         for(DetalleCompraDTOResponse dcd : listResp){
+            DetalleCompraViewModel dcv = new DetalleCompraViewModel();
             dcv.setCompraId(String.valueOf(dcd.compraId()));
             dcv.setCostoUnitario(String.valueOf(dcd.costoUnitario())+ " Bs");
             dcv.setDescuento(String.valueOf(dcd.descuento())+" Bs");
@@ -51,13 +52,15 @@ public class CompraPresenter {
 
     public List<ListaCompraViewModel> presentList(List<CompraDTOResponse> listResp){
         List<ListaCompraViewModel> lista = new ArrayList<>();
-        ListaCompraViewModel lcv = new ListaCompraViewModel();
         for(CompraDTOResponse cdr : listResp){
+            ListaCompraViewModel lcv = new ListaCompraViewModel();
+            lcv.setId(cdr.id());
             lcv.setProveedor(cdr.proveedor());
             lcv.setCostoBruto(String.valueOf(cdr.costoBruto())+" Bs");
             lcv.setCostoNeto(String.valueOf(cdr.costoNeto())+" Bs");
             lcv.setDescuentoTotal(String.valueOf(cdr.descuentoTotal())+" Bs");
             lcv.setFecha(cdr.fecha());
+            lcv.setLoteId(cdr.loteId());
             lista.add(lcv);
         }
         return lista;

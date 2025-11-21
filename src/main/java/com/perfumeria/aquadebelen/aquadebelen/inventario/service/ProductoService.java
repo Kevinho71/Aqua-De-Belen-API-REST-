@@ -104,8 +104,8 @@ public class ProductoService {
 
     public ProductoDTOResponse mapToDtoResponse(Producto producto) {
         return new ProductoDTOResponse(producto.getId(),
-                phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta(), producto.getDescripcion(),
-                producto.getNombre(), producto.getTipoProducto().getNombre());
+            phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta(), producto.getDescripcion(),
+            producto.getNombre(), producto.getTipoProducto().getNombre(), producto.getTipoProducto().getId());
     }
 
     public void eliminar(Integer id) {

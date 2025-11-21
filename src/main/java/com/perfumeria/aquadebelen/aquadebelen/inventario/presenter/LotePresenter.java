@@ -1,6 +1,5 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.presenter;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,14 +12,17 @@ import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.LoteViewModel
 @Component
 public class LotePresenter {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
     public LoteViewModel present(LoteDTOResponse res) {
         LoteViewModel lvm = new LoteViewModel();
-        lvm.setId(String.valueOf(res.id()));
+        lvm.setId(res.id() != null ? String.valueOf(res.id()) : "N/A");
+        lvm.setIdRaw(res.id());
         lvm.setFechaIngreso(res.fechaIngreso());
-        lvm.setCompraId("Compra #" + res.compraId());
-        lvm.setCantidadSublotes(res.cantidadSublotes() + " sublotes");
+        Integer compraId = res.compraId();
+        lvm.setCompraId(compraId != null ? "Compra #" + compraId : "Sin compra");
+        lvm.setCompraIdRaw(compraId);
+        Integer cantidadSublotes = res.cantidadSublotes();
+        lvm.setCantidadSublotes(cantidadSublotes + " sublotes");
+        lvm.setCantidadSublotesRaw(cantidadSublotes);
         return lvm;
     }
 
@@ -28,9 +30,14 @@ public class LotePresenter {
         List<ListLoteViewModel> lista = new ArrayList<>();
         for (LoteDTOResponse res : listResp) {
             ListLoteViewModel lvm = new ListLoteViewModel();
+            lvm.setId(res.id());
             lvm.setFechaIngreso(res.fechaIngreso());
-            lvm.setCompraId("Compra #" + res.compraId());
-            lvm.setCantidadSublotes(res.cantidadSublotes() + " sublotes");
+            Integer compraId = res.compraId();
+            lvm.setCompraId(compraId != null ? "Compra #" + compraId : "Sin compra");
+            lvm.setCompraIdRaw(compraId);
+            Integer cantidadSublotes = res.cantidadSublotes();
+            lvm.setCantidadSublotes(cantidadSublotes + " sublotes");
+            lvm.setCantidadSublotesRaw(cantidadSublotes);
             lista.add(lvm);
         }
         return lista;

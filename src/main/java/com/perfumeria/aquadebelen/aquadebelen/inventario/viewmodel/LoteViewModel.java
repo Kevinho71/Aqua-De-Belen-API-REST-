@@ -5,6 +5,9 @@ public class LoteViewModel {
     private String fechaIngreso;
     private String compraId;
     private String cantidadSublotes;
+    private Integer idRaw;
+    private Integer compraIdRaw;
+    private Integer cantidadSublotesRaw;
 
     public LoteViewModel() {
     }
@@ -39,5 +42,29 @@ public class LoteViewModel {
 
     public void setCantidadSublotes(String cantidadSublotes) {
         this.cantidadSublotes = cantidadSublotes;
+    }
+
+    public Integer getIdRaw() {
+        return idRaw;
+    }
+
+    public void setIdRaw(Integer idRaw) {
+        this.idRaw = idRaw;
+    }
+
+    public Integer getCompraIdRaw() {
+        return compraIdRaw;
+    }
+
+    public void setCompraIdRaw(Integer compraIdRaw) {
+        this.compraIdRaw = compraIdRaw;
+    }
+
+    public Integer getCantidadSublotesRaw() {
+        return cantidadSublotesRaw;
+    }
+
+    public void setCantidadSublotesRaw(Integer cantidadSublotesRaw) {
+        this.cantidadSublotesRaw = cantidadSublotesRaw;
     }
 }

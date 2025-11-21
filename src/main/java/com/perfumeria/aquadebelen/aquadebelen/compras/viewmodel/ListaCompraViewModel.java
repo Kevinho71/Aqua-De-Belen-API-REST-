@@ -2,11 +2,12 @@ package com.perfumeria.aquadebelen.aquadebelen.compras.viewmodel;
 
 public class ListaCompraViewModel {
 
+    Integer id;
     String proveedor;
     String costoBruto;
     String costoNeto;
     String descuentoTotal;
-    // String loteId;
+    Integer loteId;
 
     String fecha;
 
@@ -51,6 +52,22 @@ public class ListaCompraViewModel {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getLoteId() {
+        return loteId;
+    }
+
+    public void setLoteId(Integer loteId) {
+        this.loteId = loteId;
     }
 
 }

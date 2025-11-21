@@ -11,6 +11,11 @@ public class SubloteViewModel {
     private String costoUnitario;
     private String estado;
     private String loteId;
+    private Integer idRaw;
+    private Integer loteIdRaw;
+    private Double cantidadInicialRaw;
+    private Double cantidadActualRaw;
+    private Double costoUnitarioRaw;
 
     public SubloteViewModel() {
     }
@@ -93,5 +98,45 @@ public class SubloteViewModel {
 
     public void setLoteId(String loteId) {
         this.loteId = loteId;
+    }
+
+    public Integer getIdRaw() {
+        return idRaw;
+    }
+
+    public void setIdRaw(Integer idRaw) {
+        this.idRaw = idRaw;
+    }
+
+    public Integer getLoteIdRaw() {
+        return loteIdRaw;
+    }
+
+    public void setLoteIdRaw(Integer loteIdRaw) {
+        this.loteIdRaw = loteIdRaw;
+    }
+
+    public Double getCantidadInicialRaw() {
+        return cantidadInicialRaw;
+    }
+
+    public void setCantidadInicialRaw(Double cantidadInicialRaw) {
+        this.cantidadInicialRaw = cantidadInicialRaw;
+    }
+
+    public Double getCantidadActualRaw() {
+        return cantidadActualRaw;
+    }
+
+    public void setCantidadActualRaw(Double cantidadActualRaw) {
+        this.cantidadActualRaw = cantidadActualRaw;
+    }
+
+    public Double getCostoUnitarioRaw() {
+        return costoUnitarioRaw;
+    }
+
+    public void setCostoUnitarioRaw(Double costoUnitarioRaw) {
+        this.costoUnitarioRaw = costoUnitarioRaw;
     }
 }

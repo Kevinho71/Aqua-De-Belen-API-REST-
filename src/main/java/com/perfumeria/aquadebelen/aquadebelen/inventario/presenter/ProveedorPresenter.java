@@ -13,11 +13,15 @@ public class ProveedorPresenter {
     
     public ProveedorViewModel present(ProveedorDTOResponse res) {
         ProveedorViewModel pvm = new ProveedorViewModel();
+        pvm.setId(res.id());
         pvm.setNombre(res.nombre());
         pvm.setCorreo(res.correo());
         pvm.setTelefono(res.telefono());
         pvm.setNit(res.nit());
-        pvm.setUbicacion(res.ubicacion());
+        pvm.setUbicacionId(res.ubicacionId());
+        pvm.setCiudad(res.ubicacionCiudad());
+        pvm.setZona(res.ubicacionZona());
+        pvm.setUbicacion(buildUbicacionLabel(res.ubicacionCiudad(), res.ubicacionZona()));
 
         return pvm;
     }
@@ -29,5 +33,18 @@ public class ProveedorPresenter {
             lista.add(pvm);
         }
         return lista;
+    }
+
+    private String buildUbicacionLabel(String ciudad, String zona) {
+        if (ciudad == null && zona == null) {
+            return null;
+        }
+        if (zona == null || zona.isBlank()) {
+            return ciudad;
+        }
+        if (ciudad == null || ciudad.isBlank()) {
+            return zona;
+        }
+        return ciudad + " - " + zona;
     }
 }

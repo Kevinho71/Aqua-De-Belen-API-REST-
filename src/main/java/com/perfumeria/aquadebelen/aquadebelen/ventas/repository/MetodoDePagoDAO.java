@@ -4,4 +4,6 @@ import com.perfumeria.aquadebelen.aquadebelen.ventas.model.MetodoDePago;
 
 public interface MetodoDePagoDAO {
     MetodoDePago findById(Integer id);
+
+    java.util.List<MetodoDePago> list();
 }

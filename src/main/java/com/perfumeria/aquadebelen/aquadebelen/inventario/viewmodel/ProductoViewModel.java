@@ -7,16 +7,18 @@ public class ProductoViewModel {
     private String precio;
     private String descripcion;
     private String tipoProducto;
+    private Integer tipoProductoId;
 
     public ProductoViewModel() {
     }
 
-    public ProductoViewModel(String productoId, String nombre, String precio, String descripcion, String tipoProducto) {
+    public ProductoViewModel(String productoId, String nombre, String precio, String descripcion, String tipoProducto, Integer tipoProductoId) {
         this.productoId = productoId;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
         this.tipoProducto = tipoProducto;
+        this.tipoProductoId = tipoProductoId;
     }
 
     public String getProductoId() {
@@ -57,6 +59,14 @@ public class ProductoViewModel {
 
     public void setTipoProducto(String tipoProducto) {
         this.tipoProducto = tipoProducto;
+    }
+
+    public Integer getTipoProductoId() {
+        return tipoProductoId;
+    }
+
+    public void setTipoProductoId(Integer tipoProductoId) {
+        this.tipoProductoId = tipoProductoId;
     }
 
 }
