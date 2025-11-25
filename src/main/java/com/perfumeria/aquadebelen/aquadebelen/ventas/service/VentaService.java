@@ -16,9 +16,11 @@ import com.perfumeria.aquadebelen.aquadebelen.inventario.repository.ProductoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.service.SubloteService;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaRequest;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaResponse;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.MetodoDePagoResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaRequest;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.DetalleVenta;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.model.MetodoDePago;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.Venta;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.DetalleVentaDAO;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.MetodoDePagoDAO;
@@ -152,6 +154,15 @@ public class VentaService {
             listaResp.add(e);
         }
         return listaResp;
+    }
+
+    public List<MetodoDePagoResponse> listarMetodosDePago() {
+        List<MetodoDePago> metodos = mpDAO.list();
+        List<MetodoDePagoResponse> respuesta = new ArrayList<>();
+        for (MetodoDePago metodo : metodos) {
+            respuesta.add(new MetodoDePagoResponse(metodo.getId(), metodo.getMetodo()));
+        }
+        return respuesta;
     }
 
     public VentaResponse mapToDtoResponse(Venta venta) {

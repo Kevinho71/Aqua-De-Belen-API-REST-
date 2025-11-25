@@ -9,7 +9,7 @@ public class CompraViewModel {
     String costoBruto;
     String costoNeto;
     String descuentoTotal;
-    //String loteId;
+    Integer loteId;
     String proveedor;
     String fecha;
     List<DetalleCompraViewModel> detalles;
@@ -76,5 +76,13 @@ public class CompraViewModel {
             detalles = new ArrayList<>();
         }
         detalles.add(detalle);
+    }
+
+    public Integer getLoteId() {
+        return loteId;
+    }
+
+    public void setLoteId(Integer loteId) {
+        this.loteId = loteId;
     }
 }

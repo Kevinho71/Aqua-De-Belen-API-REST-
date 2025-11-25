@@ -1,13 +1,23 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel;
 
 public class ListSubloteViewModel {
+    private Integer id;
     private String codigoSublote;
     private String producto;
     private String cantidadActual;
     private String estado;
     private String fechaVencimiento;
+    private Integer loteId;
 
     public ListSubloteViewModel() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getCodigoSublote() {
@@ -48,5 +58,13 @@ public class ListSubloteViewModel {
 
     public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public Integer getLoteId() {
+        return loteId;
+    }
+
+    public void setLoteId(Integer loteId) {
+        this.loteId = loteId;
     }
 }

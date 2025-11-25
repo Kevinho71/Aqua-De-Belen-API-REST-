@@ -20,6 +20,7 @@ public class ProductoPresenter {
         pvm.setDescripcion(res.descripcion());
         pvm.setPrecio(String.valueOf(res.precio()) + " Bs");
         pvm.setTipoProducto(res.tipoProducto());
+        pvm.setTipoProductoId(res.tipoProductoId());
 
         return pvm;
     }
@@ -28,6 +29,7 @@ public class ProductoPresenter {
         List<ListProductoViewModel> lista = new ArrayList<>();
         for (ProductoDTOResponse res : listResp) {
             ListProductoViewModel pvm = new ListProductoViewModel();
+            pvm.setId(res.productoId());
             pvm.setNombre(res.nombre());
             pvm.setDescripcion(res.descripcion());
             pvm.setPrecio(String.valueOf(res.precio()) + " Bs");

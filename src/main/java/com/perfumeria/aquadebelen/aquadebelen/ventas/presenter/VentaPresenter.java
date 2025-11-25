@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.DetalleVentaResponse;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.MetodoDePagoResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.DTO.VentaResponse;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.DetalleVentaViewModel;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.ListVentaViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.MetodoDePagoViewModel;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.viewmodel.VentaViewModel;
 
 @Component
@@ -60,11 +62,24 @@ public class VentaPresenter {
             ListVentaViewModel listPres = new ListVentaViewModel();
             listPres.setVentaId(String.valueOf(resp.ventaId()));
             listPres.setCliente(resp.cliente());
+            listPres.setTotalBruto(String.valueOf(resp.totalBruto()) + " Bs");
+            listPres.setDescuentoTotal(String.valueOf(resp.descuentoTotal()) + " Bs");
             listPres.setTotalNeto(String.valueOf(resp.totalNeto()) + " Bs");
             listPres.setConFactura(formatFactura(resp.conFactura()));
             listPres.setFecha(resp.fecha());
             lista.add(listPres);
 
+        }
+        return lista;
+    }
+
+    public List<MetodoDePagoViewModel> presentMetodosPago(List<MetodoDePagoResponse> listaResp) {
+        List<MetodoDePagoViewModel> lista = new ArrayList<>();
+        for (MetodoDePagoResponse respuesta : listaResp) {
+            MetodoDePagoViewModel vm = new MetodoDePagoViewModel();
+            vm.setId(respuesta.id());
+            vm.setMetodo(respuesta.metodo());
+            lista.add(vm);
         }
         return lista;
     }

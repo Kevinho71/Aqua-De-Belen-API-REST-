@@ -15,12 +15,16 @@ public class ClientePresenter {
     public ClienteViewModel present(ClienteDTOResponse res) {
         ClienteViewModel cvm = new ClienteViewModel();
         cvm.setId(String.valueOf(res.id()));
+        cvm.setNombre(res.nombre());
+        cvm.setApellido(res.apellido());
         cvm.setNombreCompleto(res.nombre() + " " + res.apellido());
         cvm.setTelefono(res.telefono() != null ? res.telefono() : "Sin teléfono");
         cvm.setNitCi(res.nitCi() != null ? res.nitCi() : "Sin NIT/CI");
         cvm.setDireccion(res.direccion() != null ? res.direccion() : "Sin dirección");
         cvm.setNivelFidelidad(res.nivelFidelidad());
+        cvm.setNivelFidelidadId(res.nivelFidelidadId());
         cvm.setUbicacion(res.ubicacion());
+        cvm.setUbicacionId(res.ubicacionId());
         return cvm;
     }
 
@@ -28,11 +32,17 @@ public class ClientePresenter {
         List<ListClienteViewModel> lista = new ArrayList<>();
         for (ClienteDTOResponse res : listResp) {
             ListClienteViewModel cvm = new ListClienteViewModel();
+            cvm.setId(res.id());
+            cvm.setNombre(res.nombre());
+            cvm.setApellido(res.apellido());
             cvm.setNombreCompleto(res.nombre() + " " + res.apellido());
-            cvm.setTelefono(res.telefono() != null ? res.telefono() : "N/A");
-            cvm.setNitCi(res.nitCi() != null ? res.nitCi() : "N/A");
+            cvm.setTelefono(res.telefono() != null ? res.telefono() : "Sin teléfono");
+            cvm.setNitCi(res.nitCi() != null ? res.nitCi() : "Sin NIT/CI");
+            cvm.setDireccion(res.direccion() != null ? res.direccion() : "Sin dirección");
             cvm.setNivelFidelidad(res.nivelFidelidad());
+            cvm.setNivelFidelidadId(res.nivelFidelidadId());
             cvm.setUbicacion(res.ubicacion());
+            cvm.setUbicacionId(res.ubicacionId());
             lista.add(cvm);
         }
         return lista;

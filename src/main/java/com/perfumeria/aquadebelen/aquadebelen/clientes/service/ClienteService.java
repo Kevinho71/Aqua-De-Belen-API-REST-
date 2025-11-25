@@ -94,7 +94,9 @@ public class ClienteService {
             cliente.getNitCi(),
             cliente.getDireccion(),
             cliente.getNivelFidelidad().getNivel(),
-            cliente.getUbicacion().getCiudad() + " - " + cliente.getUbicacion().getZona()
+            cliente.getNivelFidelidad().getId(),
+            cliente.getUbicacion().getCiudad() + " - " + cliente.getUbicacion().getZona(),
+            cliente.getUbicacion().getId()
         );
     }
 }
