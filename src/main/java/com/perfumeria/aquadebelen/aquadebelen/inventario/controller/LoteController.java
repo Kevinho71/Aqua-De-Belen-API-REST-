@@ -33,8 +33,10 @@ public class LoteController {
     }
 
     @GetMapping("/lotes")
-    public ResponseEntity<List<ListLoteViewModel>> listar() {
-        List<LoteDTOResponse> resp = loteService.listar();
+    public ResponseEntity<List<ListLoteViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<LoteDTOResponse> resp = loteService.listar(page, size);
         List<ListLoteViewModel> ltvm = lotePresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }

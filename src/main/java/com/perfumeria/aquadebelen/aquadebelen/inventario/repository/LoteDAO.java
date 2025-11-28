@@ -10,6 +10,7 @@ public interface LoteDAO {
     Lote findById(Integer id);
     void store(Lote producto);
     List<Lote> list();
+    List<Lote> list(int page, int size);
     Integer nextId();
 
     List<Lote> findByFilters(Integer compraId, LocalDateTime fechaInicio, LocalDateTime fechaFin);

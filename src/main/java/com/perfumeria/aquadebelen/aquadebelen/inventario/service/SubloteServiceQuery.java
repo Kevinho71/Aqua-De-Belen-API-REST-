@@ -36,6 +36,17 @@ public class SubloteServiceQuery {
         return response;
     }
 
+    public List<SubloteDTOResponse> listar(int page, int size) {
+        List<Sublote> sublotes = subloteDAO.list(page, size);
+        List<SubloteDTOResponse> response = new ArrayList<>();
+        
+        for (Sublote sublote : sublotes) {
+            response.add(mapToDTOResponse(sublote));
+        }
+        
+        return response;
+    }
+
     public List<SubloteDTOResponse> findDisponibles() {
         List<Sublote> sublotes = subloteDAO.findDisponibles();
         List<SubloteDTOResponse> response = new ArrayList<>();

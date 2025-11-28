@@ -42,6 +42,14 @@ public class SubloteDAOImpl implements SubloteDAO{
     }
 
     @Override
+    public List<Sublote> list(int page, int size) {
+        TypedQuery<Sublote> query = entityManager.createQuery("SELECT s FROM Sublote s ORDER BY s.fechaVencimiento DESC", Sublote.class);
+        query.setFirstResult(page * size);
+        query.setMaxResults(size);
+        return query.getResultList();
+    }
+
+    @Override
     public Integer nextId() {
         TypedQuery<Integer> query = entityManager.createQuery(
                 "SELECT COALESCE(MAX(s.id), 0) + 1 FROM Sublote s", Integer.class);

@@ -14,6 +14,8 @@ public interface MovimientoDAO {
     Movimiento findById(Integer id);
     
     List<Movimiento> findAll();
+    
+    List<Movimiento> findAll(int page, int size);
 
     List<Movimiento> findByFilters(String tipo, LocalDateTime fechaInicio, LocalDateTime fechaFin, Integer subloteId);
 }

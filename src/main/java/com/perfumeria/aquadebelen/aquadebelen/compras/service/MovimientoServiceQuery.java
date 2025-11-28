@@ -37,6 +37,17 @@ public class MovimientoServiceQuery {
         return response;
     }
 
+    public List<MovimientoDTOResponse> listar(int page, int size) {
+        List<Movimiento> movimientos = movimientoDAO.findAll(page, size);
+        List<MovimientoDTOResponse> response = new ArrayList<>();
+        
+        for (Movimiento movimiento : movimientos) {
+            response.add(mapToDTOResponse(movimiento));
+        }
+        
+        return response;
+    }
+
     public List<MovimientoDTOResponse> buscarPorFiltros(String tipo, LocalDateTime fechaInicio, LocalDateTime fechaFin, Integer subloteId) {
         List<Movimiento> movimientos = movimientoDAO.findByFilters(tipo, fechaInicio, fechaFin, subloteId);
         List<MovimientoDTOResponse> response = new ArrayList<>();

@@ -39,6 +39,14 @@ public class LoteDAOImpl implements LoteDAO {
     }
 
     @Override
+    public List<Lote> list(int page, int size) {
+        TypedQuery<Lote> query = entityManager.createQuery("SELECT l FROM Lote l ORDER BY l.fechaIngreso DESC", Lote.class);
+        query.setFirstResult(page * size);
+        query.setMaxResults(size);
+        return query.getResultList();
+    }
+
+    @Override
     public Integer nextId() {
         TypedQuery<Integer> query = entityManager.createQuery("SELECT COALESCE(MAX(l.id), 0) FROM Lote l ",
                 Integer.class);

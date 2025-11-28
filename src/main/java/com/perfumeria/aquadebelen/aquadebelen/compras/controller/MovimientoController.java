@@ -33,8 +33,10 @@ public class MovimientoController {
     }
 
     @GetMapping("/movimientos")
-    public ResponseEntity<List<ListMovimientoViewModel>> listar() {
-        List<MovimientoDTOResponse> resp = movimientoService.listar();
+    public ResponseEntity<List<ListMovimientoViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<MovimientoDTOResponse> resp = movimientoService.listar(page, size);
         List<ListMovimientoViewModel> ltvm = movimientoPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }

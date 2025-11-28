@@ -37,6 +37,17 @@ public class LoteServiceQuery {
         return response;
     }
 
+    public List<LoteDTOResponse> listar(int page, int size) {
+        List<Lote> lotes = loteDAO.list(page, size);
+        List<LoteDTOResponse> response = new ArrayList<>();
+        
+        for (Lote lote : lotes) {
+            response.add(mapToDTOResponse(lote));
+        }
+        
+        return response;
+    }
+
     public List<LoteDTOResponse> buscarPorFiltros(Integer compraId, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         List<Lote> lotes = loteDAO.findByFilters(compraId, fechaInicio, fechaFin);
         List<LoteDTOResponse> response = new ArrayList<>();

@@ -51,6 +51,15 @@ public class MovimientoDAOImpl implements MovimientoDAO {
     }
 
     @Override
+    public List<Movimiento> findAll(int page, int size) {
+        TypedQuery<Movimiento> query = entityManager.createQuery(
+                "SELECT m FROM Movimiento m ORDER BY m.fecha DESC", Movimiento.class);
+        query.setFirstResult(page * size);
+        query.setMaxResults(size);
+        return query.getResultList();
+    }
+
+    @Override
     public List<Movimiento> findByFilters(String tipo, LocalDateTime fechaInicio, LocalDateTime fechaFin, Integer subloteId) {
         StringBuilder jpql = new StringBuilder("SELECT m FROM Movimiento m WHERE 1=1");
         

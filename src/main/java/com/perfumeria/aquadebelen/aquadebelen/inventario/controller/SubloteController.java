@@ -32,8 +32,10 @@ public class SubloteController {
     }
 
     @GetMapping("/sublotes")
-    public ResponseEntity<List<ListSubloteViewModel>> listar() {
-        List<SubloteDTOResponse> resp = subloteService.listar();
+    public ResponseEntity<List<ListSubloteViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<SubloteDTOResponse> resp = subloteService.listar(page, size);
         List<ListSubloteViewModel> ltvm = sublotePresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }

@@ -12,6 +12,8 @@ public interface SubloteDAO {
 
     List<Sublote> list();
 
+    List<Sublote> list(int page, int size);
+
     Integer nextId();
     
     Sublote findProximoAVencerByProductoId(Integer productoId);
