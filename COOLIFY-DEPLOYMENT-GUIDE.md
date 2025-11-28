@@ -153,6 +153,16 @@ https://aquadebelen.prod.ott.tja.ucb.edu.bo/
 2. Confirma que `sslmode=require` esté en DATABASE_URL
 3. Verifica usuario y contraseña
 
+### **Error: "Could not acquire change log lock"**
+✅ **Solución:**
+1. Ejecuta en Supabase SQL Editor:
+```sql
+-- Liberar el lock de Liquibase
+UPDATE databasechangeloglock SET locked = FALSE, lockgranted = NULL, lockedby = NULL WHERE id = 1;
+```
+2. Asegúrate de tener `SPRING_LIQUIBASE_ENABLED=false` en las variables de entorno
+3. Redeploy en Coolify
+
 ### **La app se construye pero no responde**
 ✅ **Solución:**
 1. Verifica que el puerto expuesto sea `8080`
