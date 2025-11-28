@@ -1,5 +1,6 @@
 package com.perfumeria.aquadebelen.aquadebelen.inventario.service;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,15 @@ public class LoteServiceQuery {
             response.add(mapToDTOResponse(lote));
         }
         
+        return response;
+    }
+
+    public List<LoteDTOResponse> buscarPorFiltros(Integer compraId, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        List<Lote> lotes = loteDAO.findByFilters(compraId, fechaInicio, fechaFin);
+        List<LoteDTOResponse> response = new ArrayList<>();
+        for (Lote lote : lotes) {
+            response.add(mapToDTOResponse(lote));
+        }
         return response;
     }
 

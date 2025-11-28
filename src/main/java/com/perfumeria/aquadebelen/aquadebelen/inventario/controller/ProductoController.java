@@ -77,8 +77,10 @@ public class ProductoController {
         description = "Obtiene la lista completa de productos registrados en el inventario"
     )
     @GetMapping("/productos")
-    public ResponseEntity<List<ListProductoViewModel>> listar() {
-        List<ProductoDTOResponse> resp = productoService.listar();
+    public ResponseEntity<List<ListProductoViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<ProductoDTOResponse> resp = productoService.listar(page, size);
         List<ListProductoViewModel> ltvm = productoPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }
@@ -185,6 +187,16 @@ public class ProductoController {
         @PathVariable("id") @Min(1) Integer id) {
         ProductoStockTotalViewModel stock = productoService.obtenerStockTotalProducto(id);
         return ResponseEntity.ok(stock);
+    }
+
+    @Operation(
+        summary = "Listar tipos de producto",
+        description = "Obtiene la lista de todos los tipos de producto disponibles."
+    )
+    @ApiResponse(responseCode = "200", description = "OK")
+    @GetMapping("/productos/tipos")
+    public ResponseEntity<List<com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.TipoProductoViewModel>> listarTiposProducto() {
+        return ResponseEntity.ok(productoPresenter.presentTipos(productoService.listarTipos()));
     }
 
 

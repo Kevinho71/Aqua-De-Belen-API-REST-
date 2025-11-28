@@ -44,16 +44,24 @@ public class ProductoService {
             producto.setDescripcion(req.descripcion());
             producto.setNombre(req.nombre());
             producto.setTipoProducto(tpDAO.findById(req.tipoProductoId()));
+            producto.setDescontinuado(req.descontinuado() != null ? req.descontinuado() : false);
             pDAO.store(producto);
             agregarPrecioHistorico(producto, req.precio()); 
         } else {
             producto = pDAO.findById(id);
          //   producto.setPrecio(req.precio());
-            producto.setDescripcion(req.descripcion());
-            producto.setNombre(req.nombre());
-            producto.setTipoProducto(tpDAO.findById(req.tipoProductoId()));
+            if (req.descripcion() != null) producto.setDescripcion(req.descripcion());
+            if (req.nombre() != null) producto.setNombre(req.nombre());
+            if (req.tipoProductoId() != null) {
+                producto.setTipoProducto(tpDAO.findById(req.tipoProductoId()));
+            }
+            if (req.descontinuado() != null) {
+                producto.setDescontinuado(req.descontinuado());
+            }
             pDAO.store(producto);
-            agregarPrecioHistorico(producto, req.precio());
+            if (req.precio() > 0) {
+                agregarPrecioHistorico(producto, req.precio());
+            }
         }
         Producto producto2 = pDAO.findById(producto.getId());
         return mapToDtoResponse(producto2);
@@ -82,6 +90,16 @@ public class ProductoService {
         return mapToDtoResponse(producto);
     }
 
+    public List<ProductoDTOResponse> listar(int page, int size) {
+        List<Producto> lista = pDAO.list(page, size);
+        List<ProductoDTOResponse> listaResp = new ArrayList<>();
+        for (Producto p : lista) {
+            ProductoDTOResponse e = mapToDtoResponse(p);
+            listaResp.add(e);
+        }
+        return listaResp;
+    }
+
     public List<ProductoDTOResponse> listar() {
         List<Producto> lista = pDAO.list();
         List<ProductoDTOResponse> listaResp = new ArrayList<>();
@@ -105,7 +123,8 @@ public class ProductoService {
     public ProductoDTOResponse mapToDtoResponse(Producto producto) {
         return new ProductoDTOResponse(producto.getId(),
             phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta(), producto.getDescripcion(),
-            producto.getNombre(), producto.getTipoProducto().getNombre(), producto.getTipoProducto().getId());
+            producto.getNombre(), producto.getTipoProducto().getNombre(), producto.getTipoProducto().getId(),
+            producto.isDescontinuado());
     }
 
     public void eliminar(Integer id) {
@@ -147,5 +166,9 @@ public class ProductoService {
         Double cantidad = subloteDAO.sumCantidadActualByProductoId(id);
         double total = cantidad != null ? cantidad : 0d;
         return new ProductoStockTotalViewModel(producto.getId(), producto.getNombre(), total);
+    }
+
+    public List<com.perfumeria.aquadebelen.aquadebelen.inventario.model.TipoProducto> listarTipos() {
+        return tpDAO.list();
     }
 }

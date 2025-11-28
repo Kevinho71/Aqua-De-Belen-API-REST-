@@ -58,6 +58,28 @@ public class SubloteServiceQuery {
         return response;
     }
 
+    public List<SubloteDTOResponse> findByProductoId(Integer productoId) {
+        List<Sublote> sublotes = subloteDAO.findByProductoId(productoId);
+        List<SubloteDTOResponse> response = new ArrayList<>();
+        
+        for (Sublote sublote : sublotes) {
+            response.add(mapToDTOResponse(sublote));
+        }
+        
+        return response;
+    }
+
+    public List<SubloteDTOResponse> buscarPorFiltros(Integer productoId, String estado) {
+        List<Sublote> sublotes = subloteDAO.findByFilters(productoId, estado);
+        List<SubloteDTOResponse> response = new ArrayList<>();
+        
+        for (Sublote sublote : sublotes) {
+            response.add(mapToDTOResponse(sublote));
+        }
+        
+        return response;
+    }
+
     private SubloteDTOResponse mapToDTOResponse(Sublote sublote) {
         return new SubloteDTOResponse(
             sublote.getId(),

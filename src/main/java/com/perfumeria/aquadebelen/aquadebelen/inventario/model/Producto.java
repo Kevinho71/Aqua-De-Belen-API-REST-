@@ -40,6 +40,30 @@ public class Producto {
     @Column(name = "nombre")
     private String nombre;
 
+    @Column(name = "descontinuado")
+    private Boolean descontinuado;
+
+    @Column(name = "clasificacion_abc")
+    private String clasificacionABC;
+
+    @Column(name = "costo_pedido")
+    private Double costoPedido;
+
+    @Column(name = "costo_almacenamiento")
+    private Double costoAlmacenamiento;
+
+    @Column(name = "tiempo_entrega")
+    private Integer tiempoEntrega;
+
+    @Column(name = "stock_seguridad")
+    private Integer stockSeguridad;
+
+    @Column(name = "eoq")
+    private Integer eoq;
+
+    @Column(name = "punto_reorden")
+    private Integer puntoReorden;
+
     @ManyToOne
     @JoinColumn(name = "tipo_producto_id")
     private TipoProducto tipoProducto;
@@ -74,4 +98,7 @@ public class Producto {
         preciosHistoricos.add(precioHistorico);
     }
 
+    public boolean isDescontinuado() {
+        return descontinuado != null ? descontinuado : false;
+    }
 }

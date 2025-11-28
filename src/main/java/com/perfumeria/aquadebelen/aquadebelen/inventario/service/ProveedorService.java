@@ -66,6 +66,15 @@ public class ProveedorService {
         pDAO.deleteById(id);
     }
 
+    public List<ProveedorDTOResponse> buscarPorFiltros(String nombre, String nit) {
+        List<Proveedor> proveedores = pDAO.findByFilters(nombre, nit);
+        List<ProveedorDTOResponse> response = new ArrayList<>();
+        for (Proveedor proveedor : proveedores) {
+            response.add(mapToDtoResponse(proveedor));
+        }
+        return response;
+    }
+
     public ProveedorDTOResponse mapToDtoResponse(Proveedor proveedor) {
         if (proveedor == null) {
             return null;

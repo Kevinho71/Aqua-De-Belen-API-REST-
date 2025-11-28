@@ -2,6 +2,7 @@ package com.perfumeria.aquadebelen.aquadebelen.inventario.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,6 +26,7 @@ public class TipoProducto {
     @Column(name="nombre")
     private String nombre;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tipoProducto")
     private List<Producto> productos;
 

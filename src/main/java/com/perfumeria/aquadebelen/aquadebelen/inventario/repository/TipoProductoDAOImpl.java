@@ -22,4 +22,9 @@ public class TipoProductoDAOImpl implements TipoProductoDAO{
         return query.getSingleResult();
 
     }
+
+    @Override
+    public java.util.List<TipoProducto> list() {
+        return entityManager.createQuery("FROM TipoProducto", TipoProducto.class).getResultList();
+    }
 }

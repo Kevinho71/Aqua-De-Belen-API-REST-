@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProductoDTOResponse;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.model.TipoProducto;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ListProductoViewModel;
 import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.ProductoViewModel;
+import com.perfumeria.aquadebelen.aquadebelen.inventario.viewmodel.TipoProductoViewModel;
 
 @Component
 public class ProductoPresenter {
@@ -21,6 +23,7 @@ public class ProductoPresenter {
         pvm.setPrecio(String.valueOf(res.precio()) + " Bs");
         pvm.setTipoProducto(res.tipoProducto());
         pvm.setTipoProductoId(res.tipoProductoId());
+        pvm.setDescontinuado(res.descontinuado());
 
         return pvm;
     }
@@ -34,7 +37,16 @@ public class ProductoPresenter {
             pvm.setDescripcion(res.descripcion());
             pvm.setPrecio(String.valueOf(res.precio()) + " Bs");
             pvm.setTipoProducto(res.tipoProducto());
+            pvm.setDescontinuado(res.descontinuado());
             lista.add(pvm);
+        }
+        return lista;
+    }
+
+    public List<TipoProductoViewModel> presentTipos(List<TipoProducto> tipos) {
+        List<TipoProductoViewModel> lista = new ArrayList<>();
+        for (TipoProducto t : tipos) {
+            lista.add(new TipoProductoViewModel(t.getId(), t.getNombre()));
         }
         return lista;
     }

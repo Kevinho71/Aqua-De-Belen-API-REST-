@@ -1,0 +1,67 @@
+databaseChangeLog:
+  - changeSet:
+      id: 16-create-pedido-sugerido
+      author: system
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - tableExists:
+                tableName: pedido_sugerido
+      changes:
+        - createTable:
+            tableName: pedido_sugerido
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: producto_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cantidad_sugerida
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: fecha_sugerida
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: estado
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: observacion
+                  type: TEXT
+              - column:
+                  name: stock_actual_momento
+                  type: DOUBLE PRECISION
+              - column:
+                  name: rop_momento
+                  type: INT
+        - addForeignKeyConstraint:
+            baseTableName: pedido_sugerido
+            baseColumnNames: producto_id
+            referencedTableName: producto
+            referencedColumnNames: id
+            constraintName: fk_pedido_sugerido_producto
+            onDelete: CASCADE
+        - createIndex:
+            tableName: pedido_sugerido
+            indexName: idx_pedido_sugerido_estado
+            columns:
+              - column:
+                  name: estado
+        - createIndex:
+            tableName: pedido_sugerido
+            indexName: idx_pedido_sugerido_producto_id
+            columns:
+              - column:
+                  name: producto_id

@@ -2,6 +2,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-1
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: factura
     changes:
     - createTable:
         columns:
@@ -31,6 +36,12 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-2
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          uniqueConstraintExists:
+            constraintName: ukdqdpyg3neeur0ima5mnwti398
+            tableName: factura
     changes:
     - addUniqueConstraint:
         columnNames: venta_id
@@ -39,6 +50,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-3
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: cliente
     changes:
     - createTable:
         columns:
@@ -75,6 +91,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-4
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: detalle_reserva
     changes:
     - createTable:
         columns:
@@ -96,6 +117,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-5
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: detalle_venta
     changes:
     - createTable:
         columns:
@@ -126,6 +152,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-6
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: estado_reserva
     changes:
     - createTable:
         columns:
@@ -144,6 +175,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-7
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: lote
     changes:
     - createTable:
         columns:
@@ -165,6 +201,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-8
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: metodo_de_pago
     changes:
     - createTable:
         columns:
@@ -183,6 +224,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-9
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: nivel_fidelidad
     changes:
     - createTable:
         columns:
@@ -201,6 +247,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-10
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: producto
     changes:
     - createTable:
         columns:
@@ -228,6 +279,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-11
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: reserva
     changes:
     - createTable:
         columns:
@@ -258,6 +314,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-12
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: sublote
     changes:
     - createTable:
         columns:
@@ -288,6 +349,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-13
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: tipo_producto
     changes:
     - createTable:
         columns:
@@ -306,6 +372,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-14
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: ubicacion
     changes:
     - createTable:
         columns:
@@ -327,6 +398,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-15
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        not:
+          tableExists:
+            tableName: venta
     changes:
     - createTable:
         columns:
@@ -363,6 +439,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-16
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk2em9dpm8qsg21wqf2v1bmshdw'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: tipo_producto_id
@@ -378,6 +459,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-17
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk2icb4ojg57cpbd6koay8tj0k5'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: ubicacion_id
@@ -393,6 +479,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-18
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk4f0d0afbskh3g9cparmmjibap'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: reserva_id
@@ -408,6 +499,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-19
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk4ompb22wh3ao89kcv67ca7t1u'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: metodo_de_pago_id
@@ -423,6 +519,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-20
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk5l0hajyqb2v058mcg6ssmdvmf'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: lote_id
@@ -438,6 +539,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-21
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk6ta85bifh2l74n34mel2fidxu'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: producto_id
@@ -453,6 +559,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-22
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk78hvib31gdsjf9bs1kvtu8yqg'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: nivel_fidelidad_id
@@ -468,6 +579,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-23
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fk7cg2jiyn5cf6f6elccvb6963k'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: cliente_id
@@ -483,6 +599,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-24
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fkavuba48117bv76x8o4k2fgq7n'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: producto_id
@@ -498,6 +619,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-25
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fkga6af87b9ut57bgsu00l5ardd'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: venta_id
@@ -513,6 +639,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-26
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fkiy07e8i6y6bsvahr2crdibwcs'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: venta_id
@@ -528,6 +659,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-27
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fkmtibufgj4ih57dxx1djittp4d'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: cliente_id
@@ -543,6 +679,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-28
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fkr763hw4ty1mg2dya0bnm25jo6'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: producto_id
@@ -558,6 +699,11 @@ databaseChangeLog:
 - changeSet:
     id: 1760474776931-29
     author: Usuario (generated)
+    preConditions:
+      - onFail: MARK_RAN
+        sqlCheck:
+          expectedResult: 0
+          sql: "SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_name = 'fkt6wl3pk979luk74duj256r0fa'"
     changes:
     - addForeignKeyConstraint:
         baseColumnNames: estado_reserva_id

@@ -1,5 +1,6 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,43 @@ public class MovimientoDAOImpl implements MovimientoDAO {
     public List<Movimiento> findAll() {
         TypedQuery<Movimiento> query = entityManager.createQuery(
                 "SELECT m FROM Movimiento m ORDER BY m.fecha DESC", Movimiento.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Movimiento> findByFilters(String tipo, LocalDateTime fechaInicio, LocalDateTime fechaFin, Integer subloteId) {
+        StringBuilder jpql = new StringBuilder("SELECT m FROM Movimiento m WHERE 1=1");
+        
+        if (tipo != null && !tipo.trim().isEmpty()) {
+            jpql.append(" AND m.referenciaTipo = :tipo");
+        }
+        if (fechaInicio != null) {
+            jpql.append(" AND m.fecha >= :fechaInicio");
+        }
+        if (fechaFin != null) {
+            jpql.append(" AND m.fecha <= :fechaFin");
+        }
+        if (subloteId != null) {
+            jpql.append(" AND m.referenciaId = :subloteId");
+        }
+        
+        jpql.append(" ORDER BY m.fecha DESC");
+        
+        TypedQuery<Movimiento> query = entityManager.createQuery(jpql.toString(), Movimiento.class);
+        
+        if (tipo != null && !tipo.trim().isEmpty()) {
+            query.setParameter("tipo", tipo);
+        }
+        if (fechaInicio != null) {
+            query.setParameter("fechaInicio", fechaInicio);
+        }
+        if (fechaFin != null) {
+            query.setParameter("fechaFin", fechaFin);
+        }
+        if (subloteId != null) {
+            query.setParameter("subloteId", subloteId);
+        }
+        
         return query.getResultList();
     }
 }

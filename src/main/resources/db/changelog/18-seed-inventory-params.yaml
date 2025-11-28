@@ -1,0 +1,71 @@
+databaseChangeLog:
+  - changeSet:
+      id: 18-seed-inventory-params
+      author: kevinho71
+      validCheckSum: 9:fad75afddc13012ec1f82c8512f66035
+      runOnChange: true
+      changes:
+        - update:
+            tableName: producto
+            columns:
+              - column:
+                  name: costo_pedido
+                  valueNumeric: 25.0
+              - column:
+                  name: costo_almacenamiento
+                  valueNumeric: 2.0
+              - column:
+                  name: tiempo_entrega
+                  valueNumeric: 7
+              - column:
+                  name: stock_seguridad
+                  valueNumeric: 10
+            where: id = 1
+        - update:
+            tableName: producto
+            columns:
+              - column:
+                  name: costo_pedido
+                  valueNumeric: 25.0
+              - column:
+                  name: costo_almacenamiento
+                  valueNumeric: 2.0
+              - column:
+                  name: tiempo_entrega
+                  valueNumeric: 7
+              - column:
+                  name: stock_seguridad
+                  valueNumeric: 10
+            where: id = 2
+        - update:
+            tableName: producto
+            columns:
+              - column:
+                  name: costo_pedido
+                  valueNumeric: 15.0
+              - column:
+                  name: costo_almacenamiento
+                  valueNumeric: 5.0
+              - column:
+                  name: tiempo_entrega
+                  valueNumeric: 3
+              - column:
+                  name: stock_seguridad
+                  valueNumeric: 5
+            where: id = 3
+        - update:
+            tableName: producto
+            columns:
+              - column:
+                  name: costo_pedido
+                  valueNumeric: 10.0
+              - column:
+                  name: costo_almacenamiento
+                  valueNumeric: 1.0
+              - column:
+                  name: tiempo_entrega
+                  valueNumeric: 2
+              - column:
+                  name: stock_seguridad
+                  valueNumeric: 20
+            where: id = 4

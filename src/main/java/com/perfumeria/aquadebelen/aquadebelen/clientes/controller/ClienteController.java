@@ -58,8 +58,10 @@ public class ClienteController {
     }
 
     @GetMapping("/clientes")
-    public ResponseEntity<List<ListClienteViewModel>> listar() {
-        List<ClienteDTOResponse> resp = clienteService.listar();
+    public ResponseEntity<List<ListClienteViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<ClienteDTOResponse> resp = clienteService.listar(page, size);
         List<ListClienteViewModel> ltvm = clientePresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }

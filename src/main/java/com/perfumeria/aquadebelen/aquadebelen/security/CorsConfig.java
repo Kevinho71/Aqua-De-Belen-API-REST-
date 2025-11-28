@@ -17,11 +17,12 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
                             "http://localhost:3000",     // React
-                            "http://localhost:5173",     // Vite
+                            "http://localhost:5173",   
+                            "http://localhost:5174",  // Vite
                             "http://localhost:4200",     // Angular
                             "http://localhost:8081"      // Vue
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)
                         .maxAge(3600);

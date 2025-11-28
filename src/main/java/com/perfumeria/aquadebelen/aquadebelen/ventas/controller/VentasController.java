@@ -23,6 +23,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -60,8 +61,10 @@ public class VentasController {
     }
 
     @GetMapping("/ventas")
-    public ResponseEntity<List<ListVentaViewModel>> listar() {
-        List<VentaResponse> resp = VentaService.listar();
+    public ResponseEntity<List<ListVentaViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<VentaResponse> resp = VentaService.listar(page, size);
         List<ListVentaViewModel> ltvm = VentaPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }
@@ -78,6 +81,22 @@ public class VentasController {
         VentaResponse resp = VentaService.buscar(id);
        VentaViewModel tvm = VentaPresenter.present(resp);
         return ResponseEntity.ok(tvm);
+    }
+
+    @GetMapping("/ventas/buscar")
+    public ResponseEntity<List<ListVentaViewModel>> buscarPorFiltros(
+            @RequestParam(required = false) Integer clienteId,
+            @RequestParam(required = false) String fechaInicio,
+            @RequestParam(required = false) String fechaFin) {
+        
+        java.time.LocalDateTime inicio = fechaInicio != null ? 
+            java.time.LocalDateTime.parse(fechaInicio + "T00:00:00") : null;
+        java.time.LocalDateTime fin = fechaFin != null ? 
+            java.time.LocalDateTime.parse(fechaFin + "T23:59:59") : null;
+        
+        List<VentaResponse> resp = VentaService.buscarPorFiltros(clienteId, inicio, fin);
+        List<ListVentaViewModel> ltvm = VentaPresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
     }
 
 

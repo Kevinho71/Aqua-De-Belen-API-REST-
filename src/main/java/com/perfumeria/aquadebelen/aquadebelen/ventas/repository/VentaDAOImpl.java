@@ -2,8 +2,6 @@ package com.perfumeria.aquadebelen.aquadebelen.ventas.repository;
 
 import java.util.List;
 
-import javax.management.Query;
-
 import org.springframework.stereotype.Repository;
 
 import com.perfumeria.aquadebelen.aquadebelen.ventas.model.Venta;
@@ -51,7 +49,16 @@ public class VentaDAOImpl implements VentaDAO {
 
     @Override
     public List<Venta> findALL() {
-        TypedQuery<Venta> query = entityManager.createQuery("SELECT t FROM Venta t ORDER BY t.id ASC", Venta.class);
+        TypedQuery<Venta> query = entityManager.createQuery("SELECT t FROM Venta t ORDER BY t.fecha DESC", Venta.class);
+        List<Venta> lista = query.getResultList();
+        return lista;
+    }
+
+    @Override
+    public List<Venta> findALL(int page, int size) {
+        TypedQuery<Venta> query = entityManager.createQuery("SELECT t FROM Venta t ORDER BY t.fecha DESC", Venta.class);
+        query.setFirstResult(page * size);
+        query.setMaxResults(size);
         List<Venta> lista = query.getResultList();
         return lista;
     }
@@ -62,6 +69,50 @@ public class VentaDAOImpl implements VentaDAO {
                 Integer.class);
         return query.getSingleResult() + 1;
 
+    }
+
+    @Override
+    public List<Venta> findByFilters(Integer clienteId, java.time.LocalDateTime fechaInicio, java.time.LocalDateTime fechaFin) {
+        StringBuilder jpql = new StringBuilder("SELECT v FROM Venta v WHERE 1=1");
+        
+        if (clienteId != null) {
+            jpql.append(" AND v.cliente.id = :clienteId");
+        }
+        if (fechaInicio != null) {
+            jpql.append(" AND v.fecha >= :fechaInicio");
+        }
+        if (fechaFin != null) {
+            jpql.append(" AND v.fecha <= :fechaFin");
+        }
+        
+        jpql.append(" ORDER BY v.fecha DESC");
+        
+        TypedQuery<Venta> query = entityManager.createQuery(jpql.toString(), Venta.class);
+        
+        if (clienteId != null) {
+            query.setParameter("clienteId", clienteId);
+        }
+        if (fechaInicio != null) {
+            query.setParameter("fechaInicio", fechaInicio);
+        }
+        if (fechaFin != null) {
+            query.setParameter("fechaFin", fechaFin);
+        }
+        
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Object[]> sumVentasPorProductoUltimoAnio() {
+        java.time.LocalDateTime haceUnAnio = java.time.LocalDateTime.now().minusYears(1);
+        TypedQuery<Object[]> query = entityManager.createQuery(
+            "SELECT d.producto.id, SUM(d.cantidad) " +
+            "FROM DetalleVenta d " +
+            "JOIN d.venta v " +
+            "WHERE v.fecha >= :fechaLimite " +
+            "GROUP BY d.producto.id", Object[].class);
+        query.setParameter("fechaLimite", haceUnAnio);
+        return query.getResultList();
     }
 
 }

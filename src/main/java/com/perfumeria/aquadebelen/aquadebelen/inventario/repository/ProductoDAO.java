@@ -9,6 +9,7 @@ public interface ProductoDAO {
     void store(Producto producto);
     void delete(Producto producto);
     List<Producto> list();
+    List<Producto> list(int page, int size);
     Integer nextId();
     List<Producto> findByFiltros(String nombre, Integer tipoProductoId);
     Long count();

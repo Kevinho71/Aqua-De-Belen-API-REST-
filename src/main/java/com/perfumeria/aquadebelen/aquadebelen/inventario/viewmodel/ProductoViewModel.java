@@ -8,17 +8,19 @@ public class ProductoViewModel {
     private String descripcion;
     private String tipoProducto;
     private Integer tipoProductoId;
+    private boolean descontinuado;
 
     public ProductoViewModel() {
     }
 
-    public ProductoViewModel(String productoId, String nombre, String precio, String descripcion, String tipoProducto, Integer tipoProductoId) {
+    public ProductoViewModel(String productoId, String nombre, String precio, String descripcion, String tipoProducto, Integer tipoProductoId, boolean descontinuado) {
         this.productoId = productoId;
         this.nombre = nombre;
         this.precio = precio;
         this.descripcion = descripcion;
         this.tipoProducto = tipoProducto;
         this.tipoProductoId = tipoProductoId;
+        this.descontinuado = descontinuado;
     }
 
     public String getProductoId() {
@@ -27,6 +29,14 @@ public class ProductoViewModel {
 
     public void setProductoId(String productoId) {
         this.productoId = productoId;
+    }
+
+    public boolean isDescontinuado() {
+        return descontinuado;
+    }
+
+    public void setDescontinuado(boolean descontinuado) {
+        this.descontinuado = descontinuado;
     }
 
     public String getPrecio() {

@@ -37,7 +37,7 @@ public class SubloteDAOImpl implements SubloteDAO{
 
     @Override
     public List<Sublote> list() {
-        TypedQuery<Sublote> query = entityManager.createQuery("SELECT s FROM Sublote s", Sublote.class);
+        TypedQuery<Sublote> query = entityManager.createQuery("SELECT s FROM Sublote s ORDER BY s.fechaVencimiento DESC", Sublote.class);
         return query.getResultList();
     }
 
@@ -99,6 +99,41 @@ public class SubloteDAOImpl implements SubloteDAO{
             "SELECT s.producto.id, COALESCE(SUM(s.cantidadActual), 0) "
                 + "FROM Sublote s WHERE s.producto IS NOT NULL GROUP BY s.producto.id",
                 Object[].class);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Sublote> findByProductoId(Integer productoId) {
+        TypedQuery<Sublote> query = entityManager.createQuery(
+                "SELECT s FROM Sublote s WHERE s.producto.id = :productoId " +
+                "ORDER BY s.fechaVencimiento ASC", 
+                Sublote.class);
+        query.setParameter("productoId", productoId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Sublote> findByFilters(Integer productoId, String estado) {
+        StringBuilder jpql = new StringBuilder("SELECT s FROM Sublote s WHERE 1=1");
+        
+        if (productoId != null) {
+            jpql.append(" AND s.producto.id = :productoId");
+        }
+        if (estado != null && !estado.isEmpty()) {
+            jpql.append(" AND s.estado = :estado");
+        }
+        
+        jpql.append(" ORDER BY s.fechaVencimiento ASC");
+        
+        TypedQuery<Sublote> query = entityManager.createQuery(jpql.toString(), Sublote.class);
+        
+        if (productoId != null) {
+            query.setParameter("productoId", productoId);
+        }
+        if (estado != null && !estado.isEmpty()) {
+            query.setParameter("estado", com.perfumeria.aquadebelen.aquadebelen.inventario.model.EstadoSublote.valueOf(estado));
+        }
+        
         return query.getResultList();
     }
 

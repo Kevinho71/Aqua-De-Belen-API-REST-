@@ -20,5 +20,8 @@ public class UbicacionDAOImpl implements UbicacionDAO{
         return entityManager.find(Ubicacion.class, id);
     }
 
-
+    @Override
+    public java.util.List<Ubicacion> list() {
+        return entityManager.createQuery("FROM Ubicacion", Ubicacion.class).getResultList();
+    }
 }

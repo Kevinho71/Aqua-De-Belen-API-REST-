@@ -86,6 +86,11 @@ public class VentaService {
             // AQUI CREAMOS UN NUEVO PRODUCTO CON EL FIN DE HALLAR SU PRECIO Y VAMOS
             // CALCULANDO EL TOTAL BRUTO
             Producto producto = pDAO.findById(dt.productoId());
+            
+            if (producto.isDescontinuado()) {
+                throw new RuntimeException("El producto '" + producto.getNombre() + "' está descontinuado y no puede venderse.");
+            }
+
             double subtotal = phDAO.findUltimoPrecioByProductoId(producto.getId()).getPrecioVenta() * dt.cantidad();
             totalBruto = totalBruto + subtotal;
         }
@@ -114,10 +119,8 @@ public class VentaService {
             descuentoTotal = descuentoTotal + dt.descuento();
             venta.addDetalle(detalle);
 
-            // Descontar del sublote más próximo a vencer
-            com.perfumeria.aquadebelen.aquadebelen.inventario.model.Sublote sublote = sServ
-                    .buscarProximoAVencer(producto.getId());
-            sServ.descontarCantidad(sublote, dt.cantidad());
+            // Descontar usando FIFO (primero los que vencen antes)
+            sServ.descontarCantidadPorProducto(producto.getId(), dt.cantidad());
         }
         venta.setDescuentoTotal(descuentoTotal);
     }
@@ -146,6 +149,16 @@ public class VentaService {
         return mapToDtoResponse(venta);
     }
 
+    public List<VentaResponse> listar(int page, int size) {
+        List<Venta> lista = tDAO.findALL(page, size);
+        List<VentaResponse> listaResp = new ArrayList<>();
+        for (Venta t : lista) {
+            VentaResponse e = mapToDtoResponse(t);
+            listaResp.add(e);
+        }
+        return listaResp;
+    }
+
     public List<VentaResponse> listar() {
         List<Venta> lista = tDAO.findALL();
         List<VentaResponse> listaResp = new ArrayList<>();
@@ -161,6 +174,15 @@ public class VentaService {
         List<MetodoDePagoResponse> respuesta = new ArrayList<>();
         for (MetodoDePago metodo : metodos) {
             respuesta.add(new MetodoDePagoResponse(metodo.getId(), metodo.getMetodo()));
+        }
+        return respuesta;
+    }
+
+    public List<VentaResponse> buscarPorFiltros(Integer clienteId, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        List<Venta> ventas = tDAO.findByFilters(clienteId, fechaInicio, fechaFin);
+        List<VentaResponse> respuesta = new ArrayList<>();
+        for (Venta venta : ventas) {
+            respuesta.add(mapToDtoResponse(venta));
         }
         return respuesta;
     }

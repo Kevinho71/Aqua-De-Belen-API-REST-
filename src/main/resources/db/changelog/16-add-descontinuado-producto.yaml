@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 16-add-descontinuado-producto
+      author: Kevinho71
+      changes:
+        - addColumn:
+            tableName: producto
+            columns:
+              - column:
+                  name: descontinuado
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false

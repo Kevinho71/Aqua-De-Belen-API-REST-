@@ -28,4 +28,12 @@ databaseChangeLog:
   - include:
       file: db/changelog/14-add-fecha-vencimiento-detalle-compra.yaml
   - include:
-      file: db/changelog/15-invertir-relacion-sublote-detalle.yaml
+      file: db/changelog/15-invertir-relacion-sublote-detalle.yaml  
+  - include:
+      file: db/changelog/16-add-descontinuado-producto.yaml
+  - include:
+      file: db/changelog/17-add-inventory-analysis-columns.yaml
+  - include:
+      file: db/changelog/18-seed-inventory-params.yaml
+  - include:
+      file: db/changelog/16-create-pedido-sugerido.yaml

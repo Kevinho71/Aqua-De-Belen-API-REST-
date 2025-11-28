@@ -7,7 +7,8 @@ public record ProductoDTOResponse (
     String descripcion,
     String nombre,
     String tipoProducto,
-    Integer tipoProductoId
+    Integer tipoProductoId,
+    boolean descontinuado
 ){
 
 }

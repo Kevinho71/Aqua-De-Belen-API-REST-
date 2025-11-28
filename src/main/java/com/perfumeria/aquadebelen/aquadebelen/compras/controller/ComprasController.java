@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perfumeria.aquadebelen.aquadebelen.compras.DTO.CompraDTORequest;
@@ -58,8 +59,10 @@ public class ComprasController {
     }
 
     @GetMapping("/compras")
-    public ResponseEntity<List<ListaCompraViewModel>> listar() {
-        List<CompraDTOResponse> resp = compraService.listar();
+    public ResponseEntity<List<ListaCompraViewModel>> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        List<CompraDTOResponse> resp = compraService.listar(page, size);
         List<ListaCompraViewModel> ltvm = compraPresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }
@@ -69,6 +72,22 @@ public class ComprasController {
         CompraDTOResponse resp = compraService.buscar(id);
         CompraViewModel cvm = compraPresenter.present(resp);
         return ResponseEntity.ok(cvm);
+    }
+
+    @GetMapping("/compras/buscar")
+    public ResponseEntity<List<ListaCompraViewModel>> buscarPorFiltros(
+            @RequestParam(required = false) Integer proveedorId,
+            @RequestParam(required = false) String fechaInicio,
+            @RequestParam(required = false) String fechaFin) {
+        
+        java.time.LocalDateTime inicio = fechaInicio != null ? 
+            java.time.LocalDateTime.parse(fechaInicio + "T00:00:00") : null;
+        java.time.LocalDateTime fin = fechaFin != null ? 
+            java.time.LocalDateTime.parse(fechaFin + "T23:59:59") : null;
+        
+        List<CompraDTOResponse> resp = compraService.buscarPorFiltros(proveedorId, inicio, fin);
+        List<ListaCompraViewModel> ltvm = compraPresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
     }
 
 }

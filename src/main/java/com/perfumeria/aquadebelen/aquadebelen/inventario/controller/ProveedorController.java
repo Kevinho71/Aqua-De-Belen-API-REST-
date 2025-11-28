@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perfumeria.aquadebelen.aquadebelen.inventario.DTO.ProveedorDTORequest;
@@ -64,6 +65,15 @@ public class ProveedorController {
         ProveedorDTOResponse resp = proveedorService.buscar(id);
         ProveedorViewModel pvm = proveedorPresenter.present(resp);
         return ResponseEntity.ok(pvm);
+    }
+
+    @GetMapping("/proveedor/buscar")
+    public ResponseEntity<List<ProveedorViewModel>> buscarPorFiltros(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String nit) {
+        List<ProveedorDTOResponse> resp = proveedorService.buscarPorFiltros(nombre, nit);
+        List<ProveedorViewModel> lpvm = proveedorPresenter.presentList(resp);
+        return ResponseEntity.ok(lpvm);
     }
 
     @DeleteMapping("/proveedor/{id}")

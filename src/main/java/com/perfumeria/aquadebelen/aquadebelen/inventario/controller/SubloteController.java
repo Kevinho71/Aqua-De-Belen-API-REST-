@@ -59,4 +59,21 @@ public class SubloteController {
         List<ListSubloteViewModel> ltvm = sublotePresenter.presentList(resp);
         return ResponseEntity.ok(ltvm);
     }
+
+    @GetMapping("/productos/{productoId}/sublotes")
+    public ResponseEntity<List<ListSubloteViewModel>> listarPorProducto(
+            @PathVariable("productoId") @Min(1) Integer productoId) {
+        List<SubloteDTOResponse> resp = subloteService.findByProductoId(productoId);
+        List<ListSubloteViewModel> ltvm = sublotePresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
+    }
+
+    @GetMapping("/sublotes/buscar")
+    public ResponseEntity<List<ListSubloteViewModel>> buscarPorFiltros(
+            @RequestParam(required = false) Integer productoId,
+            @RequestParam(required = false) String estado) {
+        List<SubloteDTOResponse> resp = subloteService.buscarPorFiltros(productoId, estado);
+        List<ListSubloteViewModel> ltvm = sublotePresenter.presentList(resp);
+        return ResponseEntity.ok(ltvm);
+    }
 }

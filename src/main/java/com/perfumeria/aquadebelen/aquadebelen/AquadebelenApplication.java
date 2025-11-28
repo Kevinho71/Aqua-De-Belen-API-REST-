@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.ClienteDAO;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.NivelFidelidadDAO;
 import com.perfumeria.aquadebelen.aquadebelen.clientes.repository.UbicacionDAO;
@@ -18,6 +19,7 @@ import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.MetodoDePagoDAO;
 import com.perfumeria.aquadebelen.aquadebelen.ventas.repository.VentaDAO;
 
 @SpringBootApplication
+@EnableScheduling
 public class AquadebelenApplication {
 
 	public static void main(String[] args) {

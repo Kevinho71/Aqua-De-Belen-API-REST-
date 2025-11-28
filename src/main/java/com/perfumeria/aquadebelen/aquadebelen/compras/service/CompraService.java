@@ -94,6 +94,11 @@ public class CompraService {
             // Incrementar el ID para cada detalle
             detalle.setId(nextId + i);
             Producto producto = prDAO.findById(dt.productoId());
+            
+            if (producto.isDescontinuado()) {
+                throw new RuntimeException("El producto '" + producto.getNombre() + "' está descontinuado y no puede comprarse.");
+            }
+
             detalle.setCantidad(dt.cantidad());
             detalle.setCostoUnitario(dt.costoUnitario());
             detalle.setDescuento(dt.descuento());
@@ -123,6 +128,16 @@ public class CompraService {
         return mapToDtoResponse(compra);
     }
 
+    public List<CompraDTOResponse> listar(int page, int size) {
+        List<Compra> lista = cDAO.findAll(page, size);
+        List<CompraDTOResponse> listaResp = new ArrayList<>();
+        for (Compra t : lista) {
+            CompraDTOResponse e = mapToDtoResponse(t);
+            listaResp.add(e);
+        }
+        return listaResp;
+    }
+
     public List<CompraDTOResponse> listar() {
         List<Compra> lista = cDAO.findAll();
         List<CompraDTOResponse> listaResp = new ArrayList<>();
@@ -131,6 +146,15 @@ public class CompraService {
             listaResp.add(e);
         }
         return listaResp;
+    }
+
+    public List<CompraDTOResponse> buscarPorFiltros(Integer proveedorId, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        List<Compra> compras = cDAO.findByFilters(proveedorId, fechaInicio, fechaFin);
+        List<CompraDTOResponse> respuesta = new ArrayList<>();
+        for (Compra compra : compras) {
+            respuesta.add(mapToDtoResponse(compra));
+        }
+        return respuesta;
     }
 
     public CompraDTOResponse mapToDtoResponse(Compra compra) {

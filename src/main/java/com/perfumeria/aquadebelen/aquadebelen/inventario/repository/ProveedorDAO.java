@@ -14,4 +14,6 @@ public interface ProveedorDAO {
 
     Integer nextId();
 
+    List<Proveedor> findByFilters(String nombre, String nit);
+
 }

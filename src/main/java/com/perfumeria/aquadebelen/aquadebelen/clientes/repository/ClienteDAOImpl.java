@@ -46,6 +46,15 @@ public class ClienteDAOImpl implements ClienteDAO {
         return query.getResultList();
     }
 
+    @Override
+    public List<Cliente> findAll(int page, int size) {
+        TypedQuery<Cliente> query = entityManager.createQuery(
+            "SELECT c FROM Cliente c", Cliente.class);
+        query.setFirstResult(page * size);
+        query.setMaxResults(size);
+        return query.getResultList();
+    }
+
     @Transactional
     @Override
     public void deleteById(Integer id) {

@@ -4,7 +4,8 @@ public record ProductoDTORequest (
     String nombre,
     double precio,
     String descripcion,
-    Integer tipoProductoId
+    Integer tipoProductoId,
+    Boolean descontinuado
     ){
 
 }

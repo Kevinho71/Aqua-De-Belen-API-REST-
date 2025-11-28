@@ -74,6 +74,17 @@ public class ClienteService {
         return response;
     }
 
+    public List<ClienteDTOResponse> listar(int page, int size) {
+        List<Cliente> clientes = clienteDAO.findAll(page, size);
+        List<ClienteDTOResponse> response = new ArrayList<>();
+        
+        for (Cliente cliente : clientes) {
+            response.add(mapToDTOResponse(cliente));
+        }
+        
+        return response;
+    }
+
     public List<ClienteDTOResponse> listar() {
         List<Cliente> clientes = clienteDAO.findAll();
         List<ClienteDTOResponse> response = new ArrayList<>();

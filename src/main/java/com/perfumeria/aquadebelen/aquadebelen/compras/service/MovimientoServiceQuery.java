@@ -1,5 +1,6 @@
 package com.perfumeria.aquadebelen.aquadebelen.compras.service;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,15 @@ public class MovimientoServiceQuery {
             response.add(mapToDTOResponse(movimiento));
         }
         
+        return response;
+    }
+
+    public List<MovimientoDTOResponse> buscarPorFiltros(String tipo, LocalDateTime fechaInicio, LocalDateTime fechaFin, Integer subloteId) {
+        List<Movimiento> movimientos = movimientoDAO.findByFilters(tipo, fechaInicio, fechaFin, subloteId);
+        List<MovimientoDTOResponse> response = new ArrayList<>();
+        for (Movimiento movimiento : movimientos) {
+            response.add(mapToDTOResponse(movimiento));
+        }
         return response;
     }
 

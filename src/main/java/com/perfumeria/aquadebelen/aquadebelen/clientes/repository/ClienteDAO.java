@@ -9,6 +9,7 @@ public interface ClienteDAO {
     void store(Cliente cliente);
     Cliente findById(Integer id);
     List<Cliente> findAll();
+    List<Cliente> findAll(int page, int size);
     void deleteById(Integer id);
     Integer nextId();
     List<Cliente> findByFiltros(String nombre, String apellido, String nitCi);

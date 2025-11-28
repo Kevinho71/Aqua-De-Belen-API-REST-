@@ -35,6 +35,14 @@ public class ProductoDAOImpl implements ProductoDAO{
     @Override
     public List<Producto> list() {
        TypedQuery<Producto> query = entityManager.createQuery("SELECT p FROM Producto p", Producto.class);
+       return query.getResultList();
+    }
+
+    @Override
+    public List<Producto> list(int page, int size) {
+       TypedQuery<Producto> query = entityManager.createQuery("SELECT p FROM Producto p", Producto.class);
+       query.setFirstResult(page * size);
+       query.setMaxResults(size);
        List<Producto> lista = query.getResultList();
        return lista;
     }
