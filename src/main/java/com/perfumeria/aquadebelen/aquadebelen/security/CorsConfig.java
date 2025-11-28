@@ -20,7 +20,8 @@ public class CorsConfig {
                             "http://localhost:5173",   
                             "http://localhost:5174",  // Vite
                             "http://localhost:4200",     // Angular
-                            "http://localhost:8081"      // Vue
+                            "http://localhost:8081",     // Vue
+                            "https://aquadebelenfront.prod.dtt.tja.ucb.edu.bo"  // Frontend en producción
                         )
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
