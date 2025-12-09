@@ -20,23 +20,23 @@ public class DashboardDAOImpl implements DashboardDAO {
     public DashboardStatsDTO obtenerEstadisticasGenerales() {
         DashboardStatsDTO stats = new DashboardStatsDTO();
 
-        // Total de ventas (monto)
+        // Total de ventas (monto) - usa total_neto
         Query queryTotalVentas = entityManager.createNativeQuery(
-            "SELECT COALESCE(SUM(total), 0) FROM venta WHERE estado != 'ANULADA'"
+            "SELECT COALESCE(SUM(total_neto), 0) FROM venta"
         );
         Double totalVentas = ((Number) queryTotalVentas.getSingleResult()).doubleValue();
         stats.setTotalVentas(totalVentas);
 
         // Número de ventas
         Query queryNumVentas = entityManager.createNativeQuery(
-            "SELECT COUNT(*) FROM venta WHERE estado != 'ANULADA'"
+            "SELECT COUNT(*) FROM venta"
         );
         Long numeroVentas = ((Number) queryNumVentas.getSingleResult()).longValue();
         stats.setNumeroVentas(numeroVentas);
 
-        // Total de compras (monto)
+        // Total de compras (monto) - usa costo_neto
         Query queryTotalCompras = entityManager.createNativeQuery(
-            "SELECT COALESCE(SUM(total), 0) FROM compra"
+            "SELECT COALESCE(SUM(costo_neto), 0) FROM compra"
         );
         Double totalCompras = ((Number) queryTotalCompras.getSingleResult()).doubleValue();
         stats.setTotalCompras(totalCompras);
@@ -112,10 +112,9 @@ public class DashboardDAOImpl implements DashboardDAO {
     @Override
     public List<VentaRecienteDTO> obtenerUltimas5Ventas() {
         Query query = entityManager.createNativeQuery(
-            "SELECT v.id, c.nombre, v.fecha, v.total " +
+            "SELECT v.id, c.nombre, v.fecha, v.total_neto " +
             "FROM venta v " +
             "JOIN cliente c ON v.cliente_id = c.id " +
-            "WHERE v.estado != 'ANULADA' " +
             "ORDER BY v.fecha DESC " +
             "LIMIT 5"
         );
